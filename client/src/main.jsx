@@ -2,7 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+	createBrowserRouter,
+	RouterProvider,
+	BrowserRouter,
+} from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Results from "./pages/Results.jsx";
@@ -36,6 +40,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<BrowserRouter>
+			<React.StrictMode>
+				<RouterProvider router={router} />
+			</React.StrictMode>
+		</BrowserRouter>
 	</React.StrictMode>
 );
