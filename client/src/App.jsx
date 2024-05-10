@@ -5,11 +5,11 @@ import Header from "./components/Header";
 
 function App() {
 	return (
-		<>
+		<section className="bg-[#f9f9f9]">
 			<Navbar />
 			<Header />
 			<Outlet />
-		</>
+		</section>
 	);
 }
 

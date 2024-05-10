@@ -1,9 +1,11 @@
-import LineGraphHeader from "../components/LineGraphHeader";
+import LineRecharts from "../components/LineRecharts";
 
 function Home() {
 	return (
 		<>
-			<LineGraphHeader />
+			<section className="p-4">
+				<LineRecharts />
+			</section>
 		</>
 	);
 }
