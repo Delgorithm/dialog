@@ -7,25 +7,25 @@ import { Link } from "react-router-dom";
 function Navbar() {
 	return (
 		<>
-			<nav className="flex justify-around fixed bottom-0 w-full py-3 border-t border-t-0.5 border-black">
-				<Link to="/" className="flex flex-col items-center rounded-lg p-2">
-					<RiHome2Line className="text-3xl" />
+			<nav className="flex justify-around fixed bottom-0 w-full py-1 border-t border-t-0.5 border-black">
+				<Link to="/" className="flex flex-col items-center rounded-lg p-1">
+					<RiHome2Line className="text-2xl" />
 					Accueil
 				</Link>
 				<Link
 					to="calendar"
-					className="flex flex-col items-center rounded-lg p-2">
-					<IoCalendarNumberOutline className="text-3xl" />
+					className="flex flex-col items-center rounded-lg p-1">
+					<IoCalendarNumberOutline className="text-2xl" />
 					Calendrier
 				</Link>
 				<Link
 					to="results"
-					className="flex flex-col items-center rounded-lg p-2">
-					<GoGraph className="text-3xl" />
+					className="flex flex-col items-center rounded-lg p-1">
+					<GoGraph className="text-2xl" />
 					Résultats
 				</Link>
-				<Link to="profil" className="flex flex-col items-center rounded-lg p-2">
-					<IoPersonOutline className="text-3xl" />
+				<Link to="profil" className="flex flex-col items-center rounded-lg p-1">
+					<IoPersonOutline className="text-2xl" />
 					Profil
 				</Link>
 			</nav>
