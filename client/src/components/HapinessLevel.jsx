@@ -3,7 +3,7 @@ function HapinessLevel() {
 		e.preventDefault;
 	};
 	return (
-		<section className="pt-6 h-26">
+		<section className=" pt-6 pb-20">
 			<h2 className="text-xl">Définir un état</h2>
 			<form>
 				<section className="flex pt-2 items-center gap-5">
