@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
 	Area,
 	AreaChart,
@@ -26,6 +26,26 @@ const data = [
 
 function LineRecharts() {
 	const [value, setValue] = useState("");
+	const [newData, setNewData] = useState([]);
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+	const fetchData = () => {
+		fetch("http://localhost:3000/data")
+			.then((response) => response.json())
+			.then((newData) => {
+				setNewData(newData);
+				console.log(newData);
+			})
+			.catch((err) => {
+				console.error(
+					"Erreur lors de la récupération des données depuis le backend : ",
+					err
+				);
+			});
+	};
 
 	const handleChange = (e) => {
 		setValue(e.target.value);
@@ -38,8 +58,13 @@ function LineRecharts() {
 			"Content-Type": "application/json",
 		};
 
+		const currentDate = new Date().toLocaleDateString();
+
+		console.log(value);
+
 		const data = {
-			valeur: value,
+			value: value,
+			day: currentDate,
 		};
 
 		const options = {
@@ -84,7 +109,7 @@ function LineRecharts() {
 						/>
 
 						<XAxis dataKey="date" fontSize={10} stroke="#334155" interval={1} />
-						<YAxis dataKey="amount" fontSize={10} />
+						<YAxis dataKey="amount" fontSize={10} width={35} />
 
 						<Tooltip
 							cursor={{
@@ -102,7 +127,7 @@ function LineRecharts() {
 										<div className="grid grid-cols-2 gap-2">
 											<div className="flex flex-col">
 												<span className="text-xs uppercase text-neutral-300">
-													DATE
+													HEURE
 												</span>
 												<span className="font-bold text-sm uppercase text-neutral-200">
 													{payload[0].payload.date}
