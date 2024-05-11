@@ -11,27 +11,31 @@ import {
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa6";
 
-const data = [
-	{ date: "00:00", amount: 149 },
-	{ date: "02:00", amount: 185 },
-	{ date: "04:00", amount: 150 },
-	{ date: "06:00", amount: 155 },
-	{ date: "08:00", amount: 99 },
-	{ date: "10:00", amount: 240 },
-	{ date: "12:00", amount: 172 },
-	{ date: "14:00", amount: 92 },
-	{ date: "16:00", amount: 84 },
-	{ date: "18:00", amount: 156 },
-	{ date: "20:00", amount: 178 },
-	{ date: "22:00", amount: 187 },
-];
-
 function LineRecharts() {
 	const [value, setValue] = useState("");
 	const [newData, setNewData] = useState([]);
 	const [displayDay, setDisplayDay] = useState(new Date());
 	const [formattedDateForDB, setFormattedDateForDB] = useState("");
 	const currentDate = new Date().toLocaleDateString();
+
+	const data = [
+		{ date: "00:00", amount: 149 },
+		{ date: "02:00", amount: 185 },
+		{ date: "04:00", amount: 150 },
+		{ date: "06:00", amount: 155 },
+		{ date: "08:00", amount: 99 },
+		{ date: "10:00", amount: 240 },
+		{ date: "12:00", amount: 172 },
+		{ date: "14:00", amount: 92 },
+		{ date: "16:00", amount: 84 },
+		{ date: "18:00", amount: 156 },
+		{ date: "20:00", amount: 178 },
+		{ date: "22:00", amount: 187 },
+	];
+
+	useEffect(() => {
+		fetchData();
+	}, []);
 
 	const handlePrevDay = () => {
 		const previousDay = new Date(displayDay);
@@ -75,10 +79,6 @@ function LineRecharts() {
 		.join("/");
 	console.log(newDateForDB);
 
-	useEffect(() => {
-		fetchData();
-	}, []);
-
 	// Récupérer les valeurs depuis le backend
 	const fetchData = () => {
 		fetch("http://localhost:3000/data")
@@ -116,7 +116,12 @@ function LineRecharts() {
 				return response.json();
 			})
 			.then((data) => {
-				console.log("Données récupérées avec succès : ", data);
+				const chartData = data.map(({ jour, valeur }) => ({
+					date: jour,
+					amount: parseFloat(valeur),
+				}));
+				console.log("Données récupérées avec succès : ", chartData);
+				setNewData(chartData);
 			})
 			.catch((err) => {
 				console.error("Erreur lors de la récupération des données : ", err);
