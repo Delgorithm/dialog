@@ -8,6 +8,8 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
 const data = [
 	{ date: "00:00", amount: 149 },
@@ -27,17 +29,62 @@ const data = [
 function LineRecharts() {
 	const [value, setValue] = useState("");
 	const [newData, setNewData] = useState([]);
+	const [displayDay, setDisplayDay] = useState(new Date());
+	const [formattedDateForDB, setFormattedDateForDB] = useState("");
+	const currentDate = new Date().toLocaleDateString();
+
+	const handlePrevDay = () => {
+		const previousDay = new Date(displayDay);
+		previousDay.setDate(previousDay.getDate() - 1);
+		setDisplayDay(previousDay);
+		const formattedPreviousDay = previousDay.toLocaleDateString(
+			"fr-FR",
+			optionsForDB
+		);
+		setFormattedDateForDB(formattedPreviousDay);
+		fetchDataForSelectedDay(formattedPreviousDay);
+	};
+
+	const handleNextDay = () => {
+		const nextDay = new Date(displayDay);
+		nextDay.setDate(nextDay.getDate() + 1);
+		setDisplayDay(nextDay);
+		const formattedNextDay = nextDay.toLocaleDateString("fr-FR", optionsForDB);
+		setFormattedDateForDB(formattedNextDay);
+		fetchDataForSelectedDay(formattedNextDay);
+	};
+
+	const options = {
+		weekday: "long",
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	};
+
+	const optionsForDB = {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	};
+
+	const formattedDate = displayDay.toLocaleDateString("fr-FR", options);
+
+	const newDateForDB = displayDay
+		.toLocaleDateString("fr-FR", optionsForDB)
+		.split("/")
+		.join("/");
+	console.log(newDateForDB);
 
 	useEffect(() => {
 		fetchData();
 	}, []);
 
+	// Récupérer les valeurs depuis le backend
 	const fetchData = () => {
 		fetch("http://localhost:3000/data")
 			.then((response) => response.json())
 			.then((newData) => {
 				setNewData(newData);
-				console.log(newData);
 			})
 			.catch((err) => {
 				console.error(
@@ -47,20 +94,46 @@ function LineRecharts() {
 			});
 	};
 
+	// Récupérer les valeurs depuis le backend selon le jours en question
+	const fetchDataForSelectedDay = () => {
+		const data = {
+			day: formattedDateForDB,
+		};
+
+		const options = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		};
+
+		fetch("http://localhost:3000/data", options)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error("Erreur lors de la requête");
+				}
+				return response.json();
+			})
+			.then((data) => {
+				console.log("Données récupérées avec succès : ", data);
+			})
+			.catch((err) => {
+				console.error("Erreur lors de la récupération des données : ", err);
+			});
+	};
+
 	const handleChange = (e) => {
 		setValue(e.target.value);
 	};
 
+	// Pour ajouter une nouvelle donnée dans la db :
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		const headers = {
 			"Content-Type": "application/json",
 		};
-
-		const currentDate = new Date().toLocaleDateString();
-
-		console.log(value);
 
 		const data = {
 			value: value,
@@ -92,6 +165,15 @@ function LineRecharts() {
 
 	return (
 		<section>
+			<section className="flex justify-around gap-14 items-center pb-8">
+				<button onClick={handlePrevDay}>
+					<FaArrowLeft className="text-3xl" />
+				</button>
+				<p className="text-center">{formattedDate}</p>
+				<button onClick={handleNextDay}>
+					<FaArrowRight className="text-3xl" />
+				</button>
+			</section>
 			<section className="w-full h-56 border border-slate-700 rounded-md py-2">
 				<ResponsiveContainer width="100%" height="100%">
 					<AreaChart data={data}>
