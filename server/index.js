@@ -39,7 +39,6 @@ app.post("/", (req, res) => {
 });
 
 // Pour récupérer la valeur dans la db
-
 app.get("/data", (req, res) => {
 	connection.query("SELECT jour, valeur FROM mesure", (err, results) => {
 		if (err) {
@@ -47,8 +46,29 @@ app.get("/data", (req, res) => {
 			return;
 		}
 		res.json(results);
-		console.log(results);
 	});
+});
+
+// Pour récupérer les valeurs dans la db selon le jours
+app.post("/data", (req, res) => {
+	const { day } = req.body;
+	console.log("Date reçue par le front: ", day);
+
+	connection.query(
+		"SELECT jour, valeur FROM mesure WHERE jour = ?",
+		[day],
+		(err, results) => {
+			if (err) {
+				console.error("Erreur lors de la récupération des données : ", err);
+				res
+					.status(500)
+					.json({ error: "Erreur lors de la récupération des données" });
+				return;
+			}
+			res.json(results);
+			console.log(results);
+		}
+	);
 });
 
 const PORT = process.env.PORT || 3000;
