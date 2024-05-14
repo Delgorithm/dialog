@@ -5,8 +5,8 @@ const mysql = require("mysql2");
 
 const app = express();
 
-app.use(cors());
 app.use(express.static("public"));
+app.use(cors());
 app.use(express.json());
 
 const connection = mysql.createConnection({
@@ -25,7 +25,6 @@ connection.connect((err) => {
 });
 
 // Pour ajouter une valeur dans la db
-
 app.post("/", (req, res) => {
 	const { value, day } = req.body;
 	const sql = "INSERT INTO mesure (valeur, jour) VALUES (?, ?)";
@@ -38,24 +37,13 @@ app.post("/", (req, res) => {
 	});
 });
 
-// Pour récupérer la valeur dans la db
-app.get("/data", (req, res) => {
-	connection.query("SELECT jour, valeur FROM mesure", (err, results) => {
-		if (err) {
-			console.error("Erreur lors de la récupération des données: ", err);
-			return;
-		}
-		res.json(results);
-	});
-});
-
 // Pour récupérer les valeurs dans la db selon le jours
 app.post("/data", (req, res) => {
 	const { day } = req.body;
 	console.log("Date reçue par le front: ", day);
 
 	connection.query(
-		"SELECT jour, valeur FROM mesure WHERE jour = ?",
+		"SELECT jour, valeur, heure FROM mesure WHERE jour = ?",
 		[day],
 		(err, results) => {
 			if (err) {
@@ -65,8 +53,9 @@ app.post("/data", (req, res) => {
 					.json({ error: "Erreur lors de la récupération des données" });
 				return;
 			}
-			res.json(results);
-			console.log(results);
+			console.log("omg", res.json(results.affectedRows));
+			return res.json(results.affectedRows);
+			
 		}
 	);
 });

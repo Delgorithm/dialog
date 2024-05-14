@@ -15,9 +15,9 @@ function LineRecharts() {
 	const [value, setValue] = useState("");
 	const [newData, setNewData] = useState([]);
 	const [displayDay, setDisplayDay] = useState(new Date());
+	const [chartData, setChartData] = useState([]);
 	const [formattedDateForDB, setFormattedDateForDB] = useState("");
 	const currentDate = new Date().toLocaleDateString();
-
 	const data = [
 		{ date: "00:00", amount: 149 },
 		{ date: "02:00", amount: 185 },
@@ -33,51 +33,41 @@ function LineRecharts() {
 		{ date: "22:00", amount: 187 },
 	];
 
-	useEffect(() => {
-		fetchData();
-	}, []);
-
-	const handlePrevDay = () => {
-		const previousDay = new Date(displayDay);
-		previousDay.setDate(previousDay.getDate() - 1);
-		setDisplayDay(previousDay);
-		const formattedPreviousDay = previousDay.toLocaleDateString(
-			"fr-FR",
-			optionsForDB
-		);
-		setFormattedDateForDB(formattedPreviousDay);
-		fetchDataForSelectedDay(formattedPreviousDay);
-	};
-
-	const handleNextDay = () => {
-		const nextDay = new Date(displayDay);
-		nextDay.setDate(nextDay.getDate() + 1);
-		setDisplayDay(nextDay);
-		const formattedNextDay = nextDay.toLocaleDateString("fr-FR", optionsForDB);
-		setFormattedDateForDB(formattedNextDay);
-		fetchDataForSelectedDay(formattedNextDay);
-	};
-
-	const options = {
-		weekday: "long",
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	};
-
 	const optionsForDB = {
 		year: "numeric",
 		month: "2-digit",
 		day: "2-digit",
 	};
 
-	const formattedDate = displayDay.toLocaleDateString("fr-FR", options);
-
 	const newDateForDB = displayDay
 		.toLocaleDateString("fr-FR", optionsForDB)
 		.split("/")
 		.join("/");
 	console.log(newDateForDB);
+
+	// Evenements pour le bouton "previous" + fetch
+	const handlePrevDay = () => {
+		const previousDay = new Date(displayDay);
+		previousDay.setDate(previousDay.getDate() - 1);
+		const formattedPreviousDay = formatDateForDB(previousDay);
+		setDisplayDay(previousDay);
+		setFormattedDateForDB(formattedPreviousDay);
+		fetchDataForSelectedDay(formattedPreviousDay);
+	};
+
+	// Evenements pour le bouton "next" + fetch
+	const handleNextDay = () => {
+		const nextDay = new Date(displayDay);
+		nextDay.setDate(nextDay.getDate() + 1);
+		const formattedNextDay = formatDateForDB(nextDay);
+		setDisplayDay(nextDay);
+		setFormattedDateForDB(formattedNextDay);
+		fetchDataForSelectedDay(formattedNextDay);
+	};
+
+	const formatDateForDB = (date) => {
+		return date.toLocaleDateString("fr-FR", optionsForDB);
+	};
 
 	// Récupérer les valeurs depuis le backend
 	const fetchData = () => {
@@ -95,37 +85,37 @@ function LineRecharts() {
 	};
 
 	// Récupérer les valeurs depuis le backend selon le jours en question
-	const fetchDataForSelectedDay = () => {
-		const data = {
-			day: formattedDateForDB,
-		};
+	const fetchDataForSelectedDay = async () => {
+		try {
+			const data = {
+				day: formattedDateForDB,
+			};
 
-		const options = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		};
+			const options = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			};
 
-		fetch("http://localhost:3000/data", options)
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error("Erreur lors de la requête");
-				}
-				return response.json();
-			})
-			.then((data) => {
-				const chartData = data.map(({ jour, valeur }) => ({
-					date: jour,
-					amount: parseFloat(valeur),
-				}));
-				console.log("Données récupérées avec succès : ", chartData);
-				setNewData(chartData);
-			})
-			.catch((err) => {
-				console.error("Erreur lors de la récupération des données : ", err);
-			});
+			const response = await fetch("http://localhost:3000/data", options);
+			if (!response.ok) {
+				throw new Error("Erreur lors de la requête");
+			}
+			const responseData = await response.json();
+			console.log(responseData);
+
+			const chartData = responseData.map(({ jour, valeur, heure }) => ({
+				date: jour,
+				amount: parseFloat(valeur),
+				hour: heure,
+			}));
+			console.log("Données récupérées avec succès : ", chartData);
+			setChartData(chartData);
+		} catch (error) {
+			console.error("Erreur lors de la récupération des données : ", error);
+		}
 	};
 
 	const handleChange = (e) => {
@@ -135,6 +125,7 @@ function LineRecharts() {
 	// Pour ajouter une nouvelle donnée dans la db :
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setValue("");
 
 		const headers = {
 			"Content-Type": "application/json",
@@ -168,13 +159,17 @@ function LineRecharts() {
 			});
 	};
 
+	useEffect(() => {
+		fetchData();
+	}, []);
+
 	return (
 		<section>
 			<section className="flex justify-around gap-14 items-center pb-8">
 				<button onClick={handlePrevDay}>
 					<FaArrowLeft className="text-3xl" />
 				</button>
-				<p className="text-center">{formattedDate}</p>
+				<p className="text-center">{newDateForDB}</p>
 				<button onClick={handleNextDay}>
 					<FaArrowRight className="text-3xl" />
 				</button>
