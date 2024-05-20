@@ -8,7 +8,6 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Configuration pour se connecter à la BDD de MySQL
 const db = mysql.createConnection({
 	host: process.env.DB_HOST,
 	user: process.env.DB_USER,
@@ -26,12 +25,11 @@ db.connect((err) => {
 
 app.get("/rates", (req, res) => {
 	const day = req.query.day;
-	console.log(day);
 	if (!day) {
 		return res.status(400).send("Le paramètre 'day' est requis");
 	}
 
-	const query = "SELECT rate FROM dialogbdd WHERE day = ?";
+	const query = "SELECT rate, hour FROM dialogbdd WHERE day = ?";
 	db.query(query, [day], (err, results) => {
 		if (err) {
 			console.error("Erreur lors de l'exécutioin de la requête:", err);
