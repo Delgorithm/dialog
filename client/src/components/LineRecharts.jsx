@@ -8,26 +8,19 @@ import {
 	YAxis,
 } from "recharts";
 
-function LineRecharts() {
-	const data = [
-		{ date: "00:00", amount: 149 },
-		{ date: "02:00", amount: 185 },
-		{ date: "04:00", amount: 150 },
-		{ date: "06:00", amount: 155 },
-		{ date: "08:00", amount: 99 },
-		{ date: "10:00", amount: 240 },
-		{ date: "12:00", amount: 172 },
-		{ date: "14:00", amount: 92 },
-		{ date: "16:00", amount: 84 },
-		{ date: "18:00", amount: 156 },
-		{ date: "20:00", amount: 178 },
-		{ date: "22:00", amount: 187 },
-	];
-
+function LineRecharts({ rates }) {
+	console.log("Résultats du jour : ", rates);
+	const data = rates.map((rateObj) => ({
+		date: rateObj.hour.slice(0, 5),
+		amount: rateObj.rate,
+	}));
 	return (
 		<>
 			<section className="w-[100%] h-56 border border-slate-700 rounded-md py-2">
-				<ResponsiveContainer width="100%" height="110%">
+				<ResponsiveContainer
+					width="100%"
+					height="110%"
+					className="-translate-x-2">
 					<AreaChart data={data}>
 						<CartesianGrid
 							strokeDasharray="5 5"

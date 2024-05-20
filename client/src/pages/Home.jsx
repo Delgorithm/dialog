@@ -24,13 +24,12 @@ function Home() {
 				);
 				const data = await response.json();
 				setRates(data);
-				console.log(data);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
 		};
 		fetchData();
-	}, [currentDate]);
+	}, [formattedDate]);
 
 	const handlePrevDate = () => {
 		setCurrentDate((prevDate) => subDays(prevDate, 1));
@@ -44,7 +43,7 @@ function Home() {
 
 	return (
 		<section className="p-4">
-			<LineRecharts formattedDate={displayDate} />
+			<LineRecharts formattedDate={displayDate} rates={rates} />
 			<BtnNextPrevData
 				formattedDate={displayDate}
 				handleNextDate={handleNextDate}
