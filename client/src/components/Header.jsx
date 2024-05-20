@@ -1,6 +1,5 @@
 import Alarms from "./Alarms";
 import CurrentDate from "./CurrentDate";
-import Streak from "./Streak";
 
 function Header() {
 	return (
@@ -10,7 +9,6 @@ function Header() {
 				<CurrentDate />
 			</section>
 			<section className="flex gap-5">
-				<Streak />
 				<Alarms />
 			</section>
 		</section>

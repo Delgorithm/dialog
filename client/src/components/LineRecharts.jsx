@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
 	Area,
 	AreaChart,
@@ -8,16 +7,8 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import { FaArrowLeft } from "react-icons/fa6";
-import { FaArrowRight } from "react-icons/fa6";
 
 function LineRecharts() {
-	const [value, setValue] = useState("");
-	const [newData, setNewData] = useState([]);
-	const [displayDay, setDisplayDay] = useState(new Date());
-	const [chartData, setChartData] = useState([]);
-	const [formattedDateForDB, setFormattedDateForDB] = useState("");
-	const currentDate = new Date().toLocaleDateString();
 	const data = [
 		{ date: "00:00", amount: 149 },
 		{ date: "02:00", amount: 185 },
@@ -33,149 +24,10 @@ function LineRecharts() {
 		{ date: "22:00", amount: 187 },
 	];
 
-	const optionsForDB = {
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-	};
-
-	const newDateForDB = displayDay
-		.toLocaleDateString("fr-FR", optionsForDB)
-		.split("/")
-		.join("/");
-	console.log(newDateForDB);
-
-	// Evenements pour le bouton "previous" + fetch
-	const handlePrevDay = () => {
-		const previousDay = new Date(displayDay);
-		previousDay.setDate(previousDay.getDate() - 1);
-		const formattedPreviousDay = formatDateForDB(previousDay);
-		setDisplayDay(previousDay);
-		setFormattedDateForDB(formattedPreviousDay);
-		fetchDataForSelectedDay(formattedPreviousDay);
-	};
-
-	// Evenements pour le bouton "next" + fetch
-	const handleNextDay = () => {
-		const nextDay = new Date(displayDay);
-		nextDay.setDate(nextDay.getDate() + 1);
-		const formattedNextDay = formatDateForDB(nextDay);
-		setDisplayDay(nextDay);
-		setFormattedDateForDB(formattedNextDay);
-		fetchDataForSelectedDay(formattedNextDay);
-	};
-
-	const formatDateForDB = (date) => {
-		return date.toLocaleDateString("fr-FR", optionsForDB);
-	};
-
-	// Récupérer les valeurs depuis le backend
-	const fetchData = () => {
-		fetch("http://localhost:3000/data")
-			.then((response) => response.json())
-			.then((newData) => {
-				setNewData(newData);
-			})
-			.catch((err) => {
-				console.error(
-					"Erreur lors de la récupération des données depuis le backend : ",
-					err
-				);
-			});
-	};
-
-	// Récupérer les valeurs depuis le backend selon le jours en question
-	const fetchDataForSelectedDay = async () => {
-		try {
-			const data = {
-				day: formattedDateForDB,
-			};
-
-			const options = {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			};
-
-			const response = await fetch("http://localhost:3000/data", options);
-			if (!response.ok) {
-				throw new Error("Erreur lors de la requête");
-			}
-			const responseData = await response.json();
-			console.log(responseData);
-
-			const chartData = responseData.map(({ jour, valeur, heure }) => ({
-				date: jour,
-				amount: parseFloat(valeur),
-				hour: heure,
-			}));
-			console.log("Données récupérées avec succès : ", chartData);
-			setChartData(chartData);
-		} catch (error) {
-			console.error("Erreur lors de la récupération des données : ", error);
-		}
-	};
-
-	const handleChange = (e) => {
-		setValue(e.target.value);
-	};
-
-	// Pour ajouter une nouvelle donnée dans la db :
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setValue("");
-
-		const headers = {
-			"Content-Type": "application/json",
-		};
-
-		const data = {
-			value: value,
-			day: currentDate,
-		};
-
-		const options = {
-			mode: "cors",
-			method: "POST",
-			headers: headers,
-			body: JSON.stringify(data),
-		};
-
-		fetch("http://localhost:3000", options)
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error("Erreur lors de la requête");
-				}
-				return response.json();
-			})
-			.then((data) => {
-				console.log("Données ajoutées avec succès: ", data);
-				setValue("");
-			})
-			.catch((error) => {
-				console.error("Erreur lors de l'ajout des données :", error);
-			});
-	};
-
-	useEffect(() => {
-		fetchData();
-	}, []);
-
 	return (
-		<section>
-			<section className="flex justify-around gap-14 items-center pb-8">
-				<button onClick={handlePrevDay}>
-					<FaArrowLeft className="text-3xl" />
-				</button>
-				<p className="text-center">{newDateForDB}</p>
-				<button onClick={handleNextDay}>
-					<FaArrowRight className="text-3xl" />
-				</button>
-			</section>
-			<section className="w-full h-56 border border-slate-700 rounded-md py-2">
-				<ResponsiveContainer width="100%" height="100%">
+		<>
+			<section className="w-[100%] h-56 border border-slate-700 rounded-md py-2">
+				<ResponsiveContainer width="100%" height="110%">
 					<AreaChart data={data}>
 						<CartesianGrid
 							strokeDasharray="5 5"
@@ -238,28 +90,7 @@ function LineRecharts() {
 					</AreaChart>
 				</ResponsiveContainer>
 			</section>
-			<form onSubmit={handleSubmit} className="mt-5">
-				<label htmlFor="valeur">
-					Quel est votre taux de glucose actuel ?
-					<article className="flex justify-around items-center mt-2">
-						<input
-							type="number"
-							value={value}
-							onChange={handleChange}
-							required
-							className="w-24 p-2"
-							placeholder="80 mg/dL"
-						/>
-						<button
-							onClick={handleSubmit}
-							type="submit"
-							className="p-2 bg-blue-500 text-white">
-							Envoyer
-						</button>
-					</article>
-				</label>
-			</form>
-		</section>
+		</>
 	);
 }
 
