@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { format, addDays, subDays } from "date-fns";
+import { fr } from "date-fns/locale";
 import LineRecharts from "../components/LineRecharts";
 import BtnNextPrevData from "../components/BtnNextPrevData";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,10 +13,23 @@ function Home() {
 	);
 	const [rates, setRates] = useState([]);
 
-	const formattedDate = format(currentDate, "PPP");
+	const formattedDate = format(currentDate, "yyyy-MM-dd");
+	const displayDate = format(currentDate, "PPP", { locale: fr });
 
 	useEffect(() => {
-		// Fetch des données en fonction de la date actuelle
+		const fetchData = async () => {
+			try {
+				const response = await fetch(
+					`http://localhost:3000/rates?day=${formattedDate}`
+				);
+				const data = await response.json();
+				setRates(data);
+				console.log(data);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchData();
 	}, [currentDate]);
 
 	const handlePrevDate = () => {
@@ -30,9 +44,9 @@ function Home() {
 
 	return (
 		<section className="p-4">
-			<LineRecharts formattedDate={formattedDate} />
+			<LineRecharts formattedDate={displayDate} />
 			<BtnNextPrevData
-				formattedDate={formattedDate}
+				formattedDate={displayDate}
 				handleNextDate={handleNextDate}
 				handlePrevDate={handlePrevDate}
 			/>
