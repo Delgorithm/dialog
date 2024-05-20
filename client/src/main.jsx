@@ -28,6 +28,10 @@ const router = createBrowserRouter([
 				path: "profil",
 				element: <Profil />,
 			},
+			{
+				path: "date/:date",
+				element: <Home />,
+			},
 		],
 	},
 ]);

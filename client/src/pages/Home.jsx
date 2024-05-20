@@ -1,32 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { format, addDays, subDays } from "date-fns";
 import LineRecharts from "../components/LineRecharts";
 import BtnNextPrevData from "../components/BtnNextPrevData";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Home() {
-	const [currentDate, setCurrentDate] = useState(new Date());
+	const { date } = useParams();
+	const navigate = useNavigate();
+	const [currentDate, setCurrentDate] = useState(
+		date ? new Date(date) : new Date()
+	);
+	const [rates, setRates] = useState([]);
 
-	const options = {
-		weekday: "long",
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	};
+	const formattedDate = format(currentDate, "PPP");
 
-	const formattedDate = currentDate.toLocaleString("fr-Fr", options);
+	useEffect(() => {
+		// Fetch des données en fonction de la date actuelle
+	}, [currentDate]);
 
 	const handlePrevDate = () => {
-		setCurrentDate((prevDate) => {
-			const newDate = new Date(prevDate);
-			newDate.setDate(prevDate.getDate() - 1);
-			return newDate;
-		});
+		setCurrentDate((prevDate) => subDays(prevDate, 1));
+		navigate(`/date/${format(subDays(currentDate, 1), "yyyy-MM-dd")}`);
 	};
+
 	const handleNextDate = () => {
-		setCurrentDate((nextDate) => {
-			const newDate = new Date(nextDate);
-			newDate.setDate(nextDate.getDate() + 1);
-			return newDate;
-		});
+		setCurrentDate((nextDate) => addDays(nextDate, 1));
+		navigate(`/date/${format(addDays(currentDate, 1), "yyyy-MM-dd")}`);
 	};
 
 	return (
