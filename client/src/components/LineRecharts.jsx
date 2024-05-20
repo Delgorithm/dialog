@@ -35,12 +35,7 @@ function LineRecharts({ rates }) {
 							stroke="#60a5fa"
 						/>
 
-						<XAxis
-							dataKey="date"
-							fontSize={10}
-							stroke="#334155"
-							interval="preserveEnd"
-						/>
+						<XAxis dataKey="date" fontSize={10} stroke="#334155" interval={0} />
 						<YAxis dataKey="amount" fontSize={10} width={35} />
 
 						<Tooltip
