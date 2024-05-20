@@ -2,17 +2,19 @@ import { RiHome2Line } from "react-icons/ri";
 import { IoCalendarNumberOutline } from "react-icons/io5";
 import { GoGraph } from "react-icons/go";
 import { IoPersonOutline } from "react-icons/io5";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 
 function Navbar() {
 	const location = useLocation();
+	const matchHome = useMatch("/");
+	const matchDate = useMatch("date/:date");
 
 	return (
 		<nav className="flex justify-around fixed bottom-0 w-full py-1 border-t border-t-0.5 border-blue-200 bg-blue-100">
 			<Link
 				to="/"
 				className={
-					location.pathname === "/"
+					matchHome || matchDate
 						? "flex flex-col items-center rounded-lg p-1 bg-blue-500 text-white"
 						: "flex flex-col items-center rounded-lg p-1"
 				}>
