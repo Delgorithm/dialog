@@ -10,7 +10,7 @@ function Navbar() {
 	const matchDate = useMatch("date/:date");
 
 	return (
-		<nav className="flex justify-around fixed bottom-0 w-full py-1 border-t border-t-0.5 border-blue-200 bg-blue-100">
+		<nav className="flex justify-around fixed bottom-0 w-full py-1 border-t border-t-0.5 border-blue-200 bg-blue-100 z-50">
 			<Link
 				to="/"
 				className={

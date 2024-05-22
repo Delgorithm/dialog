@@ -4,6 +4,9 @@ import { fr } from "date-fns/locale";
 import LineRecharts from "../components/LineRecharts";
 import BtnNextPrevData from "../components/BtnNextPrevData";
 import { useNavigate, useParams } from "react-router-dom";
+import AverageInfo from "../components/AverageInfo";
+import BtnDocumentInput from "../components/BtnDocumentInput";
+import BtnTakePicture from "../components/BtnTakePicture";
 
 function Home() {
 	const { date } = useParams();
@@ -43,12 +46,15 @@ function Home() {
 
 	return (
 		<section className="p-4">
+			<AverageInfo rates={rates} />
 			<LineRecharts formattedDate={displayDate} rates={rates} />
 			<BtnNextPrevData
 				formattedDate={displayDate}
 				handleNextDate={handleNextDate}
 				handlePrevDate={handlePrevDate}
 			/>
+			<BtnDocumentInput />
+			<BtnTakePicture />
 		</section>
 	);
 }

@@ -1,5 +1,4 @@
 function Results() {
-	return <p>Results</p>;
+	return <p>Resutls</p>;
 }
-
 export default Results;

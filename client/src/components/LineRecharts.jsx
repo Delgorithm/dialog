@@ -9,14 +9,13 @@ import {
 } from "recharts";
 
 function LineRecharts({ rates }) {
-	console.log("Résultats du jour : ", rates);
 	const data = rates.map((rateObj) => ({
 		date: rateObj.hour.slice(0, 5),
 		amount: rateObj.rate,
 	}));
 	return (
 		<>
-			<section className="w-[100%] h-56 border border-slate-700 rounded-md py-2">
+			<section className="w-[100%] h-56 border rounded-md py-2">
 				<ResponsiveContainer
 					width="100%"
 					height="110%"
