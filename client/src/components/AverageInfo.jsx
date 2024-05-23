@@ -1,6 +1,4 @@
 function AverageInfo({ rates }) {
-	console.log(rates);
-
 	const calculateLastRate = () => {
 		if (rates.length === 0) {
 			return 0;

@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AverageInfo from "../components/AverageInfo";
 import BtnDocumentInput from "../components/BtnDocumentInput";
 import BtnTakePicture from "../components/BtnTakePicture";
+import BtnMulter from "../components/BtnMulter";
 
 function Home() {
 	const { date } = useParams();
@@ -55,6 +56,7 @@ function Home() {
 			/>
 			<BtnDocumentInput />
 			<BtnTakePicture />
+			<BtnMulter />
 		</section>
 	);
 }

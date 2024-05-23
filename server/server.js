@@ -1,46 +1,46 @@
-// require("dotenv").config();
-// const express = require("express");
-// const cors = require("cors");
-// const mysql = require("mysql2");
-// const app = express();
-// const port = 3000;
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const mysql = require("mysql2");
 
-// app.use(cors());
-// app.use(express.json());
+const app = express();
+const port = 3000;
 
-// const db = mysql.createConnection({
-// 	host: process.env.DB_HOST,
-// 	user: process.env.DB_USER,
-// 	password: process.env.DB_PASSWORD,
-// 	database: process.env.DB_DATABASE,
-// 	port: process.env.DB_PORT,
-// });
+app.use(cors());
+app.use(express.json());
 
-// db.connect((err) => {
-// 	if (err) {
-// 		console.error("Erreur de connexion à la base de données : ", err);
-// 	}
-// 	console.log("Connecté à la base de données MySQL");
-// });
+const db = mysql.createConnection({
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_DATABASE,
+	port: process.env.DB_PORT,
+});
 
-// app.get("/rates", (req, res) => {
-// 	const day = req.query.day;
-// 	if (!day) {
-// 		return res.status(400).send("Le paramètre 'day' est requis");
-// 	}
+db.connect((err) => {
+	if (err) {
+		console.error("Erreur de connexion à la base de données : ", err);
+	}
+	console.log("Connecté à la base de données MySQL");
+});
 
-// 	const query = "SELECT rate, hour FROM dialogbdd WHERE day = ?";
-// 	db.query(query, [day], (err, results) => {
-// 		if (err) {
-// 			console.error("Erreur lors de l'exécutioin de la requête:", err);
-// 			return res.status(500).send("Erreur interne du serveur");
-// 		}
-// 		res.json(results);
-// 	});
-// });
+// BDD
+app.get("/rates", (req, res) => {
+	const day = req.query.day;
+	if (!day) {
+		return res.status(400).send("Le paramètre 'day' est requis");
+	}
 
-// app.listen(port, () => {
-// 	console.log(`Dialog app is listening on port ${port}`);
-// });
+	const query = "SELECT rate, hour FROM dialogbdd WHERE day = ?";
+	db.query(query, [day], (err, results) => {
+		if (err) {
+			console.error("Erreur lors de l'exécutioin de la requête:", err);
+			return res.status(500).send("Erreur interne du serveur");
+		}
+		res.json(results);
+	});
+});
 
-
+app.listen(port, () => {
+	console.log(`Dialog app is listening on port ${port}`);
+});
