@@ -3,9 +3,8 @@ import { LuUpload } from "react-icons/lu";
 import { LuSendHorizonal } from "react-icons/lu";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
-function BtnDocumentInput() {
+function BtnDocumentInput({ file, setFile }) {
 	const [isCharged, setIsCharged] = useState(true);
-	const [file, setFile] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isConfirmed, setIsConfirmed] = useState(false);
 
