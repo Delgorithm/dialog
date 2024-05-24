@@ -6,7 +6,6 @@ import BtnNextPrevData from "../components/BtnNextPrevData";
 import { useNavigate, useParams } from "react-router-dom";
 import AverageInfo from "../components/AverageInfo";
 import BtnDocumentInput from "../components/BtnDocumentInput";
-import BtnTakePicture from "../components/BtnTakePicture";
 
 function Home() {
 	const { date } = useParams();
@@ -54,7 +53,6 @@ function Home() {
 				handlePrevDate={handlePrevDate}
 			/>
 			<BtnDocumentInput />
-			<BtnTakePicture />
 		</section>
 	);
 }
