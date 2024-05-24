@@ -5,6 +5,8 @@ function Tesseract({ textResult, setTextResult, file, setFile }) {
 	const convertImageToText = async () => {
 		const worker = await createWorker("eng");
 		const ret = await worker.recognize(file);
+		console.log(ret.data);
+		console.log(ret.data.paragraphs[0].lines[2].words[1].choices);
 		console.log(ret.data.text);
 		await worker.terminate();
 	};
@@ -15,7 +17,6 @@ function Tesseract({ textResult, setTextResult, file, setFile }) {
 
 	return (
 		<>
-			<p>Test</p>
 			{textResult && (
 				<>
 					<p>{textResult}</p>
