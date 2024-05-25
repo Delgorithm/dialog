@@ -15,7 +15,7 @@ function LineRecharts({ rates }) {
 	}));
 	return (
 		<>
-			<section className="w-[100%] h-56 border rounded-md py-2">
+			<section className="w-[100%] h-56 border rounded-md py-2 px-4">
 				<ResponsiveContainer
 					width="100%"
 					height="110%"

@@ -42,7 +42,7 @@ function BtnDocumentInput({ file, setFile }) {
 	};
 
 	return (
-		<section className="flex justify-around items-center">
+		<section className="flex justify-around items-center px-4">
 			<form
 				action="/uploads"
 				method="POST"

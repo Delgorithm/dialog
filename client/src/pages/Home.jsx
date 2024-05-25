@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import AverageInfo from "../components/AverageInfo";
 import BtnDocumentInput from "../components/BtnDocumentInput";
 import Tesseract from "../components/Tesseract";
+import BtnAddValues from "../components/BtnAddValues";
 
 function Home() {
 	const { date } = useParams();
@@ -18,6 +19,8 @@ function Home() {
 	// Tesseract State
 	const [textResult, setTextResult] = useState("");
 	const [file, setFile] = useState(null);
+	// State to add more values
+	const [isOpen, setIsOpen] = useState(false);
 
 	const formattedDate = format(currentDate, "yyyy-MM-dd");
 	const displayDate = format(currentDate, "PPP", { locale: fr });
@@ -47,8 +50,17 @@ function Home() {
 		navigate(`/date/${format(addDays(currentDate, 1), "yyyy-MM-dd")}`);
 	};
 
+	const handleOpen = () => {
+		setIsOpen(!isOpen);
+		if (isOpen) {
+			console.log("Not open bruuuv");
+		} else {
+			console.log("it's open brrruuuuuvvv");
+		}
+	};
+
 	return (
-		<section className="p-4">
+		<section>
 			<AverageInfo rates={rates} />
 			<LineRecharts formattedDate={displayDate} rates={rates} />
 			<BtnNextPrevData
@@ -57,6 +69,7 @@ function Home() {
 				handlePrevDate={handlePrevDate}
 			/>
 			<BtnDocumentInput file={file} setFile={setFile} />
+			<BtnAddValues isOpen={isOpen} handleOpen={handleOpen} />
 			<Tesseract
 				textResult={textResult}
 				setTextResult={setTextResult}

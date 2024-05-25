@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { createWorker } from "tesseract.js";
 
-function Tesseract({ textResult, setTextResult, file, setFile }) {
+function Tesseract({ textResult, file }) {
 	const convertImageToText = async () => {
 		const worker = await createWorker("eng");
 		const ret = await worker.recognize(file);

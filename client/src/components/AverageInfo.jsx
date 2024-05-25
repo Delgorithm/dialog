@@ -18,7 +18,7 @@ function AverageInfo({ rates }) {
 	const lastRate = calculateLastRate();
 
 	return (
-		<article className="flex justify-around items-center pb-6">
+		<article className="flex justify-around items-center pb-6 px-4">
 			<section className="flex flex-col gap-2 text-center text-sm">
 				<p className="text-xl">Taux moyen</p>
 				<p className="text-lg">{averageRate} mg/dl</p>

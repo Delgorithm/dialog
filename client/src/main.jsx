@@ -7,6 +7,9 @@ import Home from "./pages/Home.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Results from "./pages/Results.jsx";
 import Profil from "./pages/Profil.jsx";
+import SignUp from "./pages/SignUp.jsx";
+import SignOut from "./pages/SignOut.jsx";
+import Register from "./pages/Register.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -31,6 +34,18 @@ const router = createBrowserRouter([
 			{
 				path: "date/:date",
 				element: <Home />,
+			},
+			{
+				path: "signup",
+				element: <SignUp />,
+			},
+			{
+				path: "signout",
+				element: <SignOut />,
+			},
+			{
+				path: "register",
+				element: <Register />,
 			},
 		],
 	},
