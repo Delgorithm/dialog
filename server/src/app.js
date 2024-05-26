@@ -11,8 +11,8 @@ const app = express();
 const corsOptions = {
 	origin:
 		process.env.NODE_ENV === "production"
-			? "https://dialog-frontend.vercel.app/"
-			: "http://localhost:5173/",
+			? "https://dialog-frontend.vercel.app"
+			: "http://localhost:5173",
 	optionsSuccessStatus: 200,
 };
 
