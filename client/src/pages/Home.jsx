@@ -21,6 +21,10 @@ function Home() {
 	const [file, setFile] = useState(null);
 	// State to add more values
 	const [isOpen, setIsOpen] = useState(false);
+	const [additionalValues, setAdditionalValues] = useState([]);
+	const [rateText, setRateText] = useState("");
+	const [hourText, setHourText] = useState("");
+	const [dayText, setDayText] = useState("");
 
 	const formattedDate = format(currentDate, "yyyy-MM-dd");
 	const displayDate = format(currentDate, "PPP", { locale: fr });
@@ -59,6 +63,26 @@ function Home() {
 		}
 	};
 
+	const addNewValue = (e) => {
+		e.preventDefault();
+		setAdditionalValues([
+			...additionalValues,
+			{ rate: "", time: "", date: "" },
+		]);
+	};
+
+	const handleAdditionalValue = () => {
+		const updatedValues = [...additionalValues];
+		updatedValues[index] = value;
+		setAdditionalValues(updatedValues);
+	};
+
+	const handleClose = () => {
+		handleOpen();
+		setAdditionalValues([]);
+		console.log("ouiiiiii");
+	};
+
 	return (
 		<section>
 			<AverageInfo rates={rates} />
@@ -69,7 +93,20 @@ function Home() {
 				handlePrevDate={handlePrevDate}
 			/>
 			<BtnDocumentInput file={file} setFile={setFile} />
-			<BtnAddValues isOpen={isOpen} handleOpen={handleOpen} />
+			<BtnAddValues
+				isOpen={isOpen}
+				handleOpen={handleOpen}
+				additionalValues={additionalValues}
+				addNewValue={addNewValue}
+				handleAdditionalValue={handleAdditionalValue}
+				rateText={rateText}
+				setRateText={setRateText}
+				hourText={hourText}
+				setHourText={setHourText}
+				dayText={dayText}
+				setDayText={setDayText}
+				handleClose={handleClose}
+			/>
 			<Tesseract
 				textResult={textResult}
 				setTextResult={setTextResult}
