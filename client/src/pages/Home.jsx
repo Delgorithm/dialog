@@ -30,24 +30,30 @@ function Home() {
 
 	const apiUrl =
 		process.env.NODE_ENV === "production"
-			? "https://dialog-backend.vercel.app/api"
-			: "http://localhost:3000/api";
+			? "https://dialog-backend.vercel.app/api/"
+			: "http://localhost:3000/api/";
 
-	const formattedDate = format(currentDate, "yyyy-MM-dd");
 	const displayDate = format(currentDate, "PPP", { locale: fr });
 
+	const fetchData = async () => {
+		const formattedDate = format(currentDate, "yyyy-MM-dd");
+		try {
+			const response = await fetch(`${apiUrl}/rates?day=${formattedDate}`, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			const data = await response.json();
+			setRates(data);
+		} catch (err) {
+			console.error("Error fetching data:", err);
+		}
+	};
+
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const response = await fetch(`${apiUrl}/rates?day=${formattedDate}`);
-				const data = await response.json();
-				setRates(data);
-			} catch (error) {
-				console.error("Error fetching data:", error);
-			}
-		};
 		fetchData();
-	}, [formattedDate]);
+	}, [currentDate]);
 
 	const handlePrevDate = () => {
 		setCurrentDate((prevDate) => subDays(prevDate, 1));
