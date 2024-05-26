@@ -1,19 +1,15 @@
 import { RxCross1 } from "react-icons/rx";
 import { GoPlusCircle } from "react-icons/go";
+import { useState } from "react";
 
 function BtnAddValues({
 	isOpen,
 	handleOpen,
 	additionalValues,
 	addNewValue,
-	handleAdditionalValue,
-	rateText,
-	setRateText,
-	hourText,
-	setHourText,
-	dayText,
-	setDayText,
 	handleClose,
+	handleInput,
+	baseValues,
 }) {
 	return (
 		<>
@@ -37,7 +33,10 @@ function BtnAddValues({
 									<input
 										type="number"
 										placeholder="100 mg/dl"
-										className="w-28 py-1.5 pl-2 w-"
+										className="w-28 py-1.5 pl-2"
+										name="rate"
+										value={baseValues.rate}
+										onChange={handleInput}
 									/>
 								</section>
 								<section className="flex flex-col">
@@ -45,7 +44,9 @@ function BtnAddValues({
 									<input
 										type="time"
 										className="w-28 py-1.5 pl-2 "
-										value="12:30"
+										name="time"
+										value={baseValues.time}
+										onChange={handleInput}
 									/>
 								</section>
 								<section className="flex flex-col">
@@ -53,7 +54,9 @@ function BtnAddValues({
 									<input
 										type="date"
 										className="w-28 py-1.5 pl-1"
-										value="12:30"
+										name="date"
+										value={baseValues.date}
+										onChange={handleInput}
 									/>
 								</section>
 							</article>
@@ -66,34 +69,31 @@ function BtnAddValues({
 										<label htmlFor="">Taux</label>
 										<input
 											type="number"
+											name="rate"
 											placeholder="100 mg/dl"
 											className="w-28 py-1.5 pl-2"
 											value={value.rate}
-											onChange={(e) =>
-												handleChange(index, "rate", e.target.value)
-											}
+											onChange={(e) => handleInput(e, index)}
 										/>
 									</section>
 									<section className="flex flex-col">
 										<label htmlFor="">Heure</label>
 										<input
 											type="time"
-											className="w-28 py-1.5 pl-2 "
+											name="time"
+											className="w-28 py-1.5 pl-2"
 											value={value.time}
-											onChange={(e) =>
-												handleChange(index, "time", e.target.value)
-											}
+											onChange={(e) => handleInput(e, index)}
 										/>
 									</section>
 									<section className="flex flex-col">
 										<label htmlFor="">Jour</label>
 										<input
 											type="date"
+											name="date"
 											className="w-28 py-1.5 pl-1"
 											value={value.date}
-											onChange={(e) =>
-												handleChange(index, "date", e.target.value)
-											}
+											onChange={(e) => handleInput(e, index)}
 										/>
 									</section>
 								</article>

@@ -22,9 +22,11 @@ function Home() {
 	// State to add more values
 	const [isOpen, setIsOpen] = useState(false);
 	const [additionalValues, setAdditionalValues] = useState([]);
-	const [rateText, setRateText] = useState("");
-	const [hourText, setHourText] = useState("");
-	const [dayText, setDayText] = useState("");
+	const [baseValues, setBaseValues] = useState({
+		rate: "",
+		time: "",
+		date: "",
+	});
 
 	const formattedDate = format(currentDate, "yyyy-MM-dd");
 	const displayDate = format(currentDate, "PPP", { locale: fr });
@@ -71,10 +73,16 @@ function Home() {
 		]);
 	};
 
-	const handleAdditionalValue = () => {
-		const updatedValues = [...additionalValues];
-		updatedValues[index] = value;
-		setAdditionalValues(updatedValues);
+	const handleInput = (e, index = null) => {
+		const { name, value } = e.target;
+
+		if (index === null) {
+			setBaseValues({ ...baseValues, [name]: value });
+		} else {
+			const updatedValues = [...additionalValues];
+			updatedValues[index][name] = value;
+			setAdditionalValues(updatedValues);
+		}
 	};
 
 	const handleClose = () => {
@@ -98,14 +106,9 @@ function Home() {
 				handleOpen={handleOpen}
 				additionalValues={additionalValues}
 				addNewValue={addNewValue}
-				handleAdditionalValue={handleAdditionalValue}
-				rateText={rateText}
-				setRateText={setRateText}
-				hourText={hourText}
-				setHourText={setHourText}
-				dayText={dayText}
-				setDayText={setDayText}
 				handleClose={handleClose}
+				handleInput={handleInput}
+				baseValues={baseValues}
 			/>
 			<Tesseract
 				textResult={textResult}
