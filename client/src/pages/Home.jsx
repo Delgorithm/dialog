@@ -30,8 +30,8 @@ function Home() {
 
 	const apiUrl =
 		process.env.NODE_ENV === "production"
-			? "https://dialog-backend.vercel.app/api/"
-			: "http://localhost:3000/api/";
+			? "https://dialog-backend.vercel.app/api"
+			: "http://localhost:3000/api";
 
 	const displayDate = format(currentDate, "PPP", { locale: fr });
 
