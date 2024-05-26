@@ -8,7 +8,15 @@ const dataRoutes = require("./routes/dataRoutes");
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+	origin:
+		process.env.NODE_ENV === "production"
+			? "https://dialog-frontend.vercel.app/"
+			: "http://localhost:5173/",
+	optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/api", dataRoutes);
 
