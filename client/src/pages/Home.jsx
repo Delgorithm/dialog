@@ -67,10 +67,7 @@ function Home() {
 
 	const addNewValue = (e) => {
 		e.preventDefault();
-		setAdditionalValues([
-			...additionalValues,
-			{ rate: "", time: "", date: "" },
-		]);
+		setAdditionalValues([...additionalValues, { rate: "", time: "", day: "" }]);
 	};
 
 	const handleInput = (e, index = null) => {

@@ -35,8 +35,13 @@ function BtnAddValues({
 										placeholder="100 mg/dl"
 										className="w-28 py-1.5 pl-2"
 										name="rate"
+										inputMode="numeric"
+										pattern="\d*"
+										min="0"
+										max="500"
 										value={baseValues.rate}
 										onChange={handleInput}
+										required
 									/>
 								</section>
 								<section className="flex flex-col">
@@ -47,6 +52,7 @@ function BtnAddValues({
 										name="time"
 										value={baseValues.time}
 										onChange={handleInput}
+										required
 									/>
 								</section>
 								<section className="flex flex-col">
@@ -54,9 +60,10 @@ function BtnAddValues({
 									<input
 										type="date"
 										className="w-28 py-1.5 pl-1"
-										name="date"
-										value={baseValues.date}
+										name="day"
+										value={baseValues.day}
 										onChange={handleInput}
+										required
 									/>
 								</section>
 							</article>
@@ -74,6 +81,7 @@ function BtnAddValues({
 											className="w-28 py-1.5 pl-2"
 											value={value.rate}
 											onChange={(e) => handleInput(e, index)}
+											required
 										/>
 									</section>
 									<section className="flex flex-col">
@@ -84,6 +92,7 @@ function BtnAddValues({
 											className="w-28 py-1.5 pl-2"
 											value={value.time}
 											onChange={(e) => handleInput(e, index)}
+											required
 										/>
 									</section>
 									<section className="flex flex-col">
@@ -94,6 +103,7 @@ function BtnAddValues({
 											className="w-28 py-1.5 pl-1"
 											value={value.date}
 											onChange={(e) => handleInput(e, index)}
+											required
 										/>
 									</section>
 								</article>
