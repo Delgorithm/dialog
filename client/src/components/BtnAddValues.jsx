@@ -10,6 +10,7 @@ function BtnAddValues({
 	handleClose,
 	handleInput,
 	baseValues,
+	handleSubmitData,
 }) {
 	return (
 		<>
@@ -49,8 +50,8 @@ function BtnAddValues({
 									<input
 										type="time"
 										className="w-28 py-1.5 pl-2 "
-										name="time"
-										value={baseValues.time}
+										name="hour"
+										value={baseValues.hour}
 										onChange={handleInput}
 										required
 									/>
@@ -88,9 +89,9 @@ function BtnAddValues({
 										<label htmlFor="">Heure</label>
 										<input
 											type="time"
-											name="time"
+											name="hour"
 											className="w-28 py-1.5 pl-2"
-											value={value.time}
+											value={value.hour}
 											onChange={(e) => handleInput(e, index)}
 											required
 										/>
@@ -99,9 +100,9 @@ function BtnAddValues({
 										<label htmlFor="">Jour</label>
 										<input
 											type="date"
-											name="date"
+											name="day"
 											className="w-28 py-1.5 pl-1"
-											value={value.date}
+											value={value.day}
 											onChange={(e) => handleInput(e, index)}
 											required
 										/>
@@ -112,7 +113,10 @@ function BtnAddValues({
 							<button onClick={addNewValue} className="mt-10">
 								<GoPlusCircle className="text-4xl text-white bg-blue-500 rounded-full" />
 							</button>
-							<button className="flex items-center justify-center text-xl gap-5 py-3.5 w-11/12 mt-10 rounded-xl text-slate-50 bg-blue-600 active:opacity-55">
+							<button
+								type="submit"
+								onClick={handleSubmitData}
+								className="flex items-center justify-center text-xl gap-5 py-3.5 w-11/12 mt-10 rounded-xl text-slate-50 bg-blue-600 active:opacity-55">
 								Ajouter les données
 							</button>
 						</form>

@@ -10,8 +10,10 @@ function AverageInfo({ rates }) {
 		if (rates.length === 0) {
 			return 0;
 		}
-		const total = rates.reduce((sum, rateObj) => sum + rateObj.rate, 0);
-		return total / rates.length;
+		const total = Math.round(
+			rates.reduce((sum, rateObj) => sum + rateObj.rate, 0)
+		);
+		return Math.round(total / rates.length);
 	};
 
 	const averageRate = calculateAverageRate();
