@@ -28,15 +28,18 @@ function Home() {
 		day: "",
 	});
 
+	const apiUrl =
+		process.env.NODE_ENV === "production"
+			? "https://dialog-backend.vercel.app/api"
+			: "http://localhost:3000/api";
+
 	const formattedDate = format(currentDate, "yyyy-MM-dd");
 	const displayDate = format(currentDate, "PPP", { locale: fr });
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch(
-					`http://localhost:3000/rates?day=${formattedDate}`
-				);
+				const response = await fetch(`${apiUrl}/rates?day=${formattedDate}`);
 				const data = await response.json();
 				setRates(data);
 			} catch (error) {
@@ -59,11 +62,6 @@ function Home() {
 	// To open the little pop up to allow user to add datas
 	const handleOpen = () => {
 		setIsOpen(!isOpen);
-		if (isOpen) {
-			console.log("Not open bruuuv");
-		} else {
-			console.log("it's open brrruuuuuvvv");
-		}
 	};
 
 	// For the button to send the data from the inputs to the DB
@@ -96,7 +94,6 @@ function Home() {
 		handleOpen();
 		setAdditionalValues([]);
 		handleCancelInput();
-		console.log("ouiiiiii");
 	};
 
 	// To send the datas from the inputs to the DB
@@ -104,7 +101,7 @@ function Home() {
 		e.preventDefault();
 		const allValues = [baseValues, ...additionalValues];
 		try {
-			const response = await fetch("http://localhost:3000/addData", {
+			const response = await fetch(`${apiUrl}/addData`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
