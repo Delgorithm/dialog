@@ -10,6 +10,7 @@ import Profil from "./pages/Profil.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import SignOut from "./pages/SignOut.jsx";
 import Register from "./pages/Register.jsx";
+import SelectedDay from "./components/SelectedDay.jsx";
 
 const router = createBrowserRouter([
 	{
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
 			{
 				path: "calendar",
 				element: <Calendar />,
+			},
+			{
+				path: "/calendar/:id",
+				element: <SelectedDay />,
 			},
 			{
 				path: "results",
