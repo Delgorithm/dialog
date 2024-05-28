@@ -12,6 +12,11 @@ function Calendar() {
 		date ? new Date(date) : new Date()
 	);
 	const displayDate = format(currentDate, "PPP", { locale: fr });
+	const [isOpen, setIsOpen] = useState(false);
+
+	const handleOpenDay = () => {
+		setIsOpen(!isOpen);
+	};
 
 	return (
 		<>
@@ -20,7 +25,7 @@ function Calendar() {
 				<p>{displayDate}</p>
 				<SlArrowRight />
 			</section>
-			<CalendarComponent />
+			<CalendarComponent isOpen={isOpen} handleOpenDay={handleOpenDay} />
 		</>
 	);
 }
