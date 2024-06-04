@@ -1,6 +1,5 @@
 import { RxCross1 } from "react-icons/rx";
 import { GoPlusCircle } from "react-icons/go";
-import { useState } from "react";
 
 function BtnAddValues({
 	isOpen,
@@ -27,7 +26,7 @@ function BtnAddValues({
 						<form
 							action=""
 							method="POST"
-							className="relative flex flex-col justify-center items-center py-5 top-[25%] w-full h-[50%] rounded-xl bg-blue-100 z-40 overflow-auto">
+							className="relative flex flex-col justify-center items-center py-5 top-[25%] w-full h-[60%] rounded-xl bg-blue-100 z-40 overflow-auto">
 							<article className="flex justify-between items-center w-full px-4">
 								<section className="flex flex-col py-4">
 									<label htmlFor="">Taux</label>

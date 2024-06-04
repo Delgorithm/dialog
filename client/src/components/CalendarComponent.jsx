@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { CgCloseO } from "react-icons/cg";
 
 function CalendarComponent({ isOpen, handleOpenDay }) {
 	const days = Array.from(Array(31).keys()).map((day) => day + 1);
@@ -21,15 +22,28 @@ function CalendarComponent({ isOpen, handleOpenDay }) {
 					</Link>
 				))}
 			</section>
-			<section className="mx-4 p-2">
+			<section>
 				{!isOpen ? (
-					<>
-						<p>oui</p>
-					</>
+					<></>
 				) : (
-					<>
-						<p>Non</p>
-					</>
+					<article className="fixed xxs:top-[20%] xsl:top-[30%] bg-blue-500/50 backdrop-blur-sm w-11/12 h-full left-[5%] rounded-t-3xl">
+						<article className="relative mx-4 p-4">
+							<button onClick={handleOpenDay}>
+								<CgCloseO className="fixed right-5 xxs:text-3xl xsl:text-5xl" />
+							</button>
+							<p>Jour</p>
+							<div className="fixed bottom-[50%] flex justify-between">
+								<input
+									type="text"
+									className="py-1 pl-1"
+									placeholder="Informations utiles"
+								/>
+								<button className="py-1.5 px-2 bg-slate-200/90 shadow-sm border-0.5 border-black rounded-lg">
+									Ajouter
+								</button>
+							</div>
+						</article>
+					</article>
 				)}
 			</section>
 		</>

@@ -123,7 +123,7 @@ function Home() {
 	};
 
 	return (
-		<section>
+		<section className="xxs:h-[40rem]">
 			<AverageInfo rates={rates} />
 			<LineRecharts formattedDate={displayDate} rates={rates} />
 			<BtnNextPrevData
