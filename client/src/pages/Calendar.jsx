@@ -1,7 +1,7 @@
 import CalendarComponent from "../components/CalendarComponent";
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
-import { format, addDays, subDays, subMonths } from "date-fns";
+import { format, addDays, subDays, subMonths, addMonths } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -23,7 +23,7 @@ function Calendar() {
 	};
 
 	const handleNextMonth = () => {
-		setCurrentDate((nextDate) => subMonths(nextDate, 1));
+		setCurrentDate((nextDate) => addMonths(nextDate, 1));
 	};
 
 	return (
