@@ -1,4 +1,16 @@
+import { useState } from "react";
+
 function Results() {
-	return <p>Resutls</p>;
+	const [selectedDisplayDays, setSelectedDisplatDays] = useState(null);
+
+	const handleChangeView = () => {
+		console.log("yaa");
+	};
+	
+	return (
+		<>
+			<p>Resutls</p>;
+		</>
+	);
 }
 export default Results;

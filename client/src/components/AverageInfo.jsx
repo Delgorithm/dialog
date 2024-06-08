@@ -21,14 +21,14 @@ function AverageInfo({ rates }) {
 
 	return (
 		<article className="flex justify-around items-center pb-6 px-4">
-			<section className="flex flex-col gap-2 text-center text-sm">
-				<p className="text-xl">Taux moyen</p>
-				<p className="text-lg">{averageRate} mg/dl</p>
+			<section className="flex flex-col gap-2 text-center">
+				<p className="xxs:text-sm xsl:text-xl">Taux moyen</p>
+				<p className="xxs:text-sm xsl:text-lg">{averageRate} mg/dl</p>
 			</section>
 
-			<section className="flex flex-col gap-2 text-center text-sm">
-				<p className="text-xl">Dernière mesure</p>
-				<p className="text-lg">{lastRate} mg/dl</p>
+			<section className="flex flex-col gap-2 text-center">
+				<p className="xxs:text-sm xsl:text-xl">Dernière mesure</p>
+				<p className="xxs:text-sm xsl:text-lg">{lastRate} mg/dl</p>
 			</section>
 		</article>
 	);

@@ -26,14 +26,14 @@ function BtnAddValues({
 						<form
 							action=""
 							method="POST"
-							className="relative flex flex-col justify-center items-center py-5 top-[25%] w-full h-[60%] rounded-xl bg-blue-100 z-40 overflow-auto">
+							className="relative flex flex-col justify-center items-center py-5 xxs:top-[15%] xsl:top-[25%] w-full xsl:h-[60%] rounded-xl bg-blue-100 z-40 overflow-y-auto">
 							<article className="flex justify-between items-center w-full px-4">
 								<section className="flex flex-col py-4">
 									<label htmlFor="">Taux</label>
 									<input
 										type="number"
 										placeholder="100 mg/dl"
-										className="w-28 py-1.5 pl-2"
+										className="xsl:w-28 xsl:py-1.5 xsl:pl-2"
 										name="rate"
 										inputMode="numeric"
 										pattern="\d*"
@@ -48,7 +48,7 @@ function BtnAddValues({
 									<label htmlFor="">Heure</label>
 									<input
 										type="time"
-										className="w-28 py-1.5 pl-2 "
+										className="xsl:w-28 xsl:py-1.5 xsl:pl-2"
 										name="hour"
 										value={baseValues.hour}
 										onChange={handleInput}
@@ -59,7 +59,7 @@ function BtnAddValues({
 									<label htmlFor="">Jour</label>
 									<input
 										type="date"
-										className="w-28 py-1.5 pl-1"
+										className="xsl:w-28 xsl:py-1.5 xsl:pl-1"
 										name="day"
 										value={baseValues.day}
 										onChange={handleInput}
@@ -78,7 +78,7 @@ function BtnAddValues({
 											type="number"
 											name="rate"
 											placeholder="100 mg/dl"
-											className="w-28 py-1.5 pl-2"
+											className="xsl:w-28 xsl:py-1.5 xsl:pl-2"
 											value={value.rate}
 											onChange={(e) => handleInput(e, index)}
 											required
@@ -89,7 +89,7 @@ function BtnAddValues({
 										<input
 											type="time"
 											name="hour"
-											className="w-28 py-1.5 pl-2"
+											className="xsl:w-28 xsl:py-1.5 xsl:pl-2"
 											value={value.hour}
 											onChange={(e) => handleInput(e, index)}
 											required
@@ -100,7 +100,7 @@ function BtnAddValues({
 										<input
 											type="date"
 											name="day"
-											className="w-28 py-1.5 pl-1"
+											className="xsl:w-28 xsl:py-1.5 xsl:pl-1"
 											value={value.day}
 											onChange={(e) => handleInput(e, index)}
 											required
@@ -120,7 +120,9 @@ function BtnAddValues({
 							</button>
 						</form>
 					</article>
-					<button onClick={handleClose} className="fixed top-[28%] right-4">
+					<button
+						onClick={handleClose}
+						className="xxs:top-[30%] xxs:right-4 xsl:fixed top-[28%] xsl:right-4">
 						<RxCross1 className="text-4xl" />
 					</button>
 				</>

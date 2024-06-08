@@ -4,7 +4,6 @@ import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Calendar from "./pages/Calendar.jsx";
 import Results from "./pages/Results.jsx";
 import Profil from "./pages/Profil.jsx";
 import SignUp from "./pages/SignUp.jsx";
@@ -19,10 +18,6 @@ const router = createBrowserRouter([
 			{
 				path: "/",
 				element: <Home />,
-			},
-			{
-				path: "calendar",
-				element: <Calendar />,
 			},
 			{
 				path: "/calendar/:id",
