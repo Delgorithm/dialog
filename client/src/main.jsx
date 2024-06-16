@@ -1,5 +1,9 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import Home from "./pages/Home";
@@ -10,10 +14,8 @@ import Register from "./pages/Register";
 import SelectedDay from "./components/SelectedDay";
 import { fetchApi, sendDataGlucose } from "./services/api.service";
 
-const baseGlucoseUrl = "/api/glucosetoday";
-cosnt apiUrl = {
-  ""
-}
+const baseGlucoseUrl = "/api";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const router = createBrowserRouter([
   {
@@ -22,11 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetchApi(),
+        loader: () => fetchApi(baseGlucoseUrl),
         action: async ({ request }) => {
-          const formData = await request.formData();
           await sendDataGlucose(baseGlucoseUrl, request.method.toUpperCase());
-          return redirect(`/`);
+          return Navigate(`/`);
         },
       },
       {

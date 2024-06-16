@@ -9,8 +9,8 @@ class GlucoseRepository extends AbstractRepository {
 
   async create(glucose) {
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (rate) VALUES (?)`,
-      [glucose.rate]
+      `INSERT INTO ${this.table} (amount) VALUES (?)`,
+      [glucose.amount]
     );
 
     return result.insertId;
@@ -20,7 +20,7 @@ class GlucoseRepository extends AbstractRepository {
 
   async read(id) {
     const [rows] = await this.database.query(
-      `SELECT rate, hour FROM ${this.table} WHERE day = ?`,
+      `SELECT amount, hour FROM ${this.table} WHERE date = ?`,
       [id]
     );
 
@@ -35,8 +35,8 @@ class GlucoseRepository extends AbstractRepository {
 
   async update(glucose, id) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET rate = ?, hour = ?, day = ? WHERE id = ?`,
-      [glucose.rate, glucose.hour, glucose.day, id]
+      `UPDATE ${this.table} SET amount = ?, hour = ?, date = ? WHERE id = ?`,
+      [glucose.amount, glucose.hour, glucose.date, id]
     );
 
     return result.affectedRows;

@@ -11,7 +11,7 @@ import BtnAddValues from "../components/BtnAddValues";
 
 function Home() {
   const dataTest = useLoaderData();
-  console.log(dataTest);
+  console.log(`Les données obtenu depuis le loader : `, dataTest);
   const { date } = useParams();
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(

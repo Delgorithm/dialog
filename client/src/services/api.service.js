@@ -1,6 +1,6 @@
-export async function fetchApi(url) {
+export async function fetchApi(date) {
   try {
-    const response = await fetch(import.meta.env.VITE_API_URL + url);
+    const response = await fetch(import.meta.env.VITE_API_URL + date);
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
