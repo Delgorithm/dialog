@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { format, addDays, subDays } from "date-fns";
 import { fr } from "date-fns/locale";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import LineRecharts from "../components/LineRecharts";
 import BtnNextPrevData from "../components/BtnNextPrevData";
 import AverageInfo from "../components/AverageInfo";
@@ -10,16 +10,16 @@ import Tesseract from "../components/Tesseract";
 import BtnAddValues from "../components/BtnAddValues";
 
 function Home() {
+  const dataTest = useLoaderData();
+  console.log(dataTest);
   const { date } = useParams();
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(
     date ? new Date(date) : new Date()
   );
   const [rates, setRates] = useState([]);
-  // Tesseract State
   const [textResult, setTextResult] = useState("");
   const [file, setFile] = useState(null);
-  // State to add more values
   const [isOpen, setIsOpen] = useState(false);
   const [additionalValues, setAdditionalValues] = useState([]);
   const [baseValues, setBaseValues] = useState({
