@@ -18,10 +18,10 @@ class GlucoseRepository extends AbstractRepository {
 
   // The Rs of CRUD - Read operations
 
-  async read(id) {
+  async read(date) {
     const [rows] = await this.database.query(
-      `SELECT amount, hour FROM ${this.table} WHERE date = ?`,
-      [id]
+      `SELECT amount, date, time FROM ${this.table} WHERE date = ?`,
+      [date]
     );
 
     return rows[0];
@@ -35,8 +35,8 @@ class GlucoseRepository extends AbstractRepository {
 
   async update(glucose, id) {
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET amount = ?, hour = ?, date = ? WHERE id = ?`,
-      [glucose.amount, glucose.hour, glucose.date, id]
+      `UPDATE ${this.table} SET amount = ?, date = ? WHERE id = ?`,
+      [glucose.amount, glucose.date, id]
     );
 
     return result.affectedRows;

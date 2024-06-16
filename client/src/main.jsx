@@ -1,8 +1,8 @@
 import "./App.css";
 import {
   createBrowserRouter,
-  Navigate,
   RouterProvider,
+  redirect,
 } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -12,10 +12,10 @@ import Profil from "./pages/Profil";
 import SignUp from "./pages/SignUp";
 import Register from "./pages/Register";
 import SelectedDay from "./components/SelectedDay";
+
 import { fetchApi, sendDataGlucose } from "./services/api.service";
 
-const baseGlucoseUrl = "/api";
-const apiUrl = import.meta.env.VITE_API_URL;
+const baseGlucoseUrl = "/api/glucose";
 
 const router = createBrowserRouter([
   {
@@ -26,33 +26,26 @@ const router = createBrowserRouter([
         element: <Home />,
         loader: () => fetchApi(baseGlucoseUrl),
         action: async ({ request }) => {
-          await sendDataGlucose(baseGlucoseUrl, request.method.toUpperCase());
-          return Navigate(`/`);
+          const formData = await request.formData();
+          const amount = formData.get("amount");
+          const date = formData.get("date");
+          const time = formData.get("time");
+          await sendDataGlucose(
+            baseGlucoseUrl,
+            {
+              amount,
+              date,
+              time,
+            },
+            request.method.toUpperCase()
+          );
+          return redirect(`/`);
         },
       },
       {
         path: "date/:date",
         element: <Home />,
-        loader: ({ params }) => fetchApi(`${baseGlucoseUrl}/${params.id}`),
-        action: async ({ request, params }) => {
-          const formattedDate = format(currentDate, "yyyy-MM-dd");
-
-          try {
-            const response = await fetch(
-              `${apiUrl}/rates?day=${formattedDate}`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-            const data = await response.json();
-            setRates(data);
-          } catch (err) {
-            console.error("Erreur lors de la récupération des données: ", err);
-          }
-        },
+        loader: ({ params }) => fetchApi(`${baseGlucoseUrl}/${params.date}`),
       },
       {
         path: "/calendar/:id",

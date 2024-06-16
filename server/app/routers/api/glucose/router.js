@@ -15,12 +15,12 @@ const amountValidateGlucose = require("../../../middlewares/amountValidateGlucos
 
 router.get("", browse);
 
-router.get("/:id", read);
+router.get("/:date", read);
 
-router.put("/:id", amountValidateGlucose, validateGlucose, edit);
+router.put("/:date", amountValidateGlucose, validateGlucose, edit);
 
 router.post("", amountValidateGlucose, validateGlucose, add);
 
-router.delete("/:id", destroy);
+router.delete("/:date", destroy);
 
 module.exports = router;
