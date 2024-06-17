@@ -1,10 +1,8 @@
 USE dialogdb;
-
 DROP TABLE IF EXISTS glucose;
-
 CREATE TABLE glucose (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     amount INT UNSIGNED NOT NULL,
-    date DATE NOT NULL,
+    date DATETIME NOT NULL,
     time TIME NOT NULL
 );
