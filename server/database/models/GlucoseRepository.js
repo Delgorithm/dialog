@@ -20,11 +20,11 @@ class GlucoseRepository extends AbstractRepository {
 
   async read(date) {
     const [rows] = await this.database.query(
-      `SELECT amount, date, time FROM ${this.table} WHERE date = ?`,
+      `SELECT * FROM ${this.table} WHERE date = ?`,
       [date]
     );
 
-    return rows[0];
+    return rows;
   }
 
   async readAll() {

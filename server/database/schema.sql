@@ -8,8 +8,3 @@ CREATE TABLE glucose (
     date DATE NOT NULL,
     time TIME NOT NULL
 );
-
-
-
-
-

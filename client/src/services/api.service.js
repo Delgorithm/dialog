@@ -1,4 +1,5 @@
 export async function fetchApi(url) {
+  console.log(url);
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`);
     const jsonData = await response.json();

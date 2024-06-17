@@ -16,6 +16,8 @@ const read = async (req, res, next) => {
     // const glucose = await tables.glucose.read(req.params.id);
     const { date } = req.params;
     const glucose = await tables.glucose.read(date);
+    console.log(date);
+    console.log(glucose);
 
     if (glucose == null) {
       res.sendStatus(404);
