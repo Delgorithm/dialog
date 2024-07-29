@@ -5,8 +5,6 @@ class GlucoseRepository extends AbstractRepository {
     super({ table: "glucose" });
   }
 
-  // The C of CRUD - Create operation
-
   async create(glucose) {
     const [result] = await this.database.query(
       `INSERT INTO ${this.table} (amount) VALUES (?)`,
@@ -16,12 +14,10 @@ class GlucoseRepository extends AbstractRepository {
     return result.insertId;
   }
 
-  // The Rs of CRUD - Read operations
-
-  async read(date) {
+  async readByUserId(userId) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE date = ?`,
-      [date]
+      `SELECT * FROM ${this.table} WHERE user_id = ?`,
+      [userId]
     );
 
     return rows;

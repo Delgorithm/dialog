@@ -1,25 +1,20 @@
 const AbstractSeeder = require("./AbstractSeeder");
+const UserSeeder = require("./UserSeeder");
 
 class GlucoseSeeder extends AbstractSeeder {
   constructor() {
-    super({ table: "glucose", truncate: true });
+    super({ table: "glucose", truncate: true, dependencies: [UserSeeder] });
   }
 
   run() {
     for (let i = 0; i < 10; i += 1) {
-      const randomDate = this.faker.date.between({
-        from: "2024-06-15",
-        to: "2024-06-18",
-      });
-
-      const date = randomDate.toISOString().substring(0, 10);
-      const time = randomDate.toISOString().substring(11, 19);
+      const userRef = this.getRef(`user_${i}`);
 
       const fakeGlucose = {
-        amount: this.faker.number.int({ max: 500 }),
-        date: date,
-        time: time,
+        user_id: userRef.insertId,
+        amount: this.faker.number.int({ min: 50, max: 500 }),
       };
+
       this.insert(fakeGlucose);
     }
   }
