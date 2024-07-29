@@ -1,47 +1,37 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Form } from "react-router-dom";
+import useForm from "../utils/useForm";
 
 function Register() {
-  const emailRegex = /[a-z0-9._]+@[a-z0-9-]+\.[a-z]{2,3}/;
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
 
-  const [errors, setErrors] = useState({});
+  const { errors, validate } = useForm();
 
-  const handleSubmit = () => {
-    const newErrors = {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const username = usernameRef.current.value;
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const confirmPassword = confirmPasswordRef.current.value;
+    const fields = {
+      username: usernameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      confirmPassword: confirmPasswordRef.current.value,
+    };
 
-    if (username.length < 5) {
-      newErrors.username = "Le pseudonyme doit contenir au moins 5 caractères";
+    if (validate(fields)) {
+      console.log("Form is valid");
+    } else {
+      console.log("Form has errors");
     }
-
-    if (!emailRegex.test(email)) {
-      newErrors.email = "Il faut une adresse mail valide";
-    }
-
-    if (password.length < 8) {
-      newErrors.password = "Les mots de passe ne correspondent pas";
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-    }
-
-    setErrors(newErrors);
   };
 
   return (
     <section>
-      <Form method="POST" onSubmit={handleSubmit}>
+      <Form method="POST" className="flex flex-col gap-2">
         <h2>Inscription</h2>
-        <label htmlFor="username">
+        <label htmlFor="username" className="">
           Nom d'utilisateur
           <input
             type="text"
@@ -53,10 +43,49 @@ function Register() {
           />
           {errors.username && <p>{errors.username}</p>}
         </label>
+
         <label htmlFor="email">
           E-mail
-          <input type="email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Votre email"
+            ref={emailRef}
+            required
+          />
+          {errors.email && <p>{errors.email}</p>}
         </label>
+
+        <label htmlFor="password">
+          Mot de passe
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="********"
+            ref={passwordRef}
+            autoComplete="password"
+            required
+          />
+        </label>
+
+        <label htmlFor="confirmPassword">
+          Confirmation du mot de passe
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="********"
+            ref={confirmPasswordRef}
+            autoComplete="confirmPassword"
+            required
+          />
+          {errors.password && <p>{errors.password}</p>}
+        </label>
+        <button type="submit" onClick={handleSubmit}>
+          S'inscrire
+        </button>
       </Form>
     </section>
   );
