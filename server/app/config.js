@@ -2,6 +2,8 @@
 
 const express = require("express");
 
+const path = require("path");
+
 const app = express();
 
 // Configure it
@@ -107,9 +109,6 @@ app.use("/api", apiRouter);
 // 1. Uncomment the lines related to serving static files and redirecting unhandled requests.
 // 2. Ensure that the `reactBuildPath` points to the correct directory where your client's build artifacts are located.
 
-/*
-const path = require("path");
-
 const reactBuildPath = path.join(__dirname, "/../../client/dist");
 const publicFolderPath = path.join(__dirname, "/../public");
 
@@ -126,14 +125,12 @@ app.get("*.*", express.static(publicFolderPath, { maxAge: "1y" }));
 app.get("*", (_, res) => {
   res.sendFile(path.join(reactBuildPath, "/index.html"));
 });
-*/
 
 /* ************************************************************************* */
 
 // Middleware for Error Logging (Uncomment to enable)
 // Important: Error-handling middleware should be defined last, after other app.use() and routes calls.
 
-/*
 // Define a middleware function to log errors
 const logErrors = (err, req, res, next) => {
   // Log the error to the console for debugging purposes
@@ -146,7 +143,6 @@ const logErrors = (err, req, res, next) => {
 
 // Mount the logErrors middleware globally
 app.use(logErrors);
-*/
 
 /* ************************************************************************* */
 

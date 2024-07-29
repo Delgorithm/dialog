@@ -11,8 +11,7 @@ const verifyHashPassword = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    req.body.hashedPassword = hashedPassword;
+    req.body.hashed_password = hashedPassword;
 
     delete req.body.password;
 

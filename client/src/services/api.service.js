@@ -10,16 +10,24 @@ export async function fetchApi(url) {
   }
 }
 
-export async function sendDataGlucose(url, glucose, http) {
+export async function sendData(url, data, method = "POST") {
+  console.log("Sending data to:", url, "with data:", data);
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}`, {
-      method: http,
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
+      method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(glucose),
+      body: JSON.stringify(data),
     });
-    return response;
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log("Response data:", responseData);
+    return responseData;
   } catch (err) {
     console.error("Erreur lors de l'envoi des données: ", err);
     return null;

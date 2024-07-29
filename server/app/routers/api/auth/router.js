@@ -7,9 +7,9 @@ const { verifyUser } = require("../../../middlewares/verifyUser");
 const {
   verifyHashPassword,
 } = require("../../../middlewares/verifyHashPassword");
-const { verifyToken } = require("../../../middlewares/verifyToken");
+// const { verifyToken } = require("../../../middlewares/verifyToken");
 
-router.post("/users", verifyHashPassword, verifyToken, userActions.add);
+router.post("/users", verifyHashPassword, userActions.add);
 
 router.post("/login", verifyUser);
 

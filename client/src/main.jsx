@@ -5,6 +5,7 @@ import App from "./App";
 import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
 import Register from "./pages/Register";
+import { handleRegisterAction } from "./utils/actions";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+        action: handleRegisterAction,
       },
     ],
   },

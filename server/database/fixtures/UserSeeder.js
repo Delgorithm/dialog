@@ -2,7 +2,7 @@ const AbstractSeeder = require("./AbstractSeeder");
 
 class UserSeeder extends AbstractSeeder {
   constructor() {
-    super({ table: "usersw", truncate: true });
+    super({ table: "users", truncate: true });
   }
 
   run() {

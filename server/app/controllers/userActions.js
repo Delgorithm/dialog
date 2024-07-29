@@ -27,8 +27,14 @@ const edit = async (req, res, next) => {
 
 const add = async (req, res, next) => {
   try {
-    const user = req.body;
-    const insertId = await tables.users.create(user);
+    const { email, username, password } = req.body;
+
+    const existingUser = await tables.users.readByEmail(email);
+    if (existingUser) {
+      return res.status(409).json({ message: "Email already in use" });
+    }
+
+    const insertId = await tables.users.create({ email, username, password });
     res.status(201).json({ insertId });
   } catch (err) {
     next(err);
