@@ -4,9 +4,9 @@ export const validateEmail = (email) => {
 };
 
 export const validateUsername = (username) =>
-  username.length >= 5
+  username.length >= 8
     ? null
-    : "Le pseudonyme doit contenir au moins 5 caractères";
+    : "Le pseudonyme doit contenir au moins 8 caractères";
 
 export const validatePasswords = (password, confirmPassword) => {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{8,}$/;

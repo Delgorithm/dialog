@@ -12,6 +12,18 @@ const browse = async (req, res, next) => {
   }
 };
 
+const read = async (req, res, next) => {
+  try {
+    const user = await tables.users.read(req.params.id);
+    if (user === null) {
+      res.sendStatus(404);
+    }
+    res.status(201).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const edit = async (req, res, next) => {
   try {
     const user = { ...req.body, id: req.params.id };
@@ -56,6 +68,7 @@ const destroy = async (req, res, next) => {
 
 module.exports = {
   browse,
+  read,
   edit,
   add,
   destroy,

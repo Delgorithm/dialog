@@ -12,8 +12,7 @@ export async function fetchApi(url) {
 
 export async function sendData(url, data, method = "POST") {
   try {
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3310";
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -21,8 +20,12 @@ export async function sendData(url, data, method = "POST") {
       body: JSON.stringify(data),
     });
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const responseData = await response.json();
-    return { status: response.status, data: responseData };
+    return responseData;
   } catch (err) {
     console.error("Error during the send of data: ", err);
     return null;

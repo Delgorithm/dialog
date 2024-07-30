@@ -5,7 +5,7 @@ class UserRepository extends AbstractRepository {
     super({ table: "users" });
   }
 
-  async readByEmail(email) {
+  async readByEmailWithPassword(email) {
     const [rows] = await this.database.query(
       `SELECT * FROM ${this.table} WHERE email = ?`,
       [email]

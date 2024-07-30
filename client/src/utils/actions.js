@@ -1,8 +1,8 @@
 import { redirect } from "react-router-dom";
 import { sendData } from "../services/api.service";
-import { baseRegisterUrl } from "./urls";
+import { baseRegisterUrl, baseLoginUrl } from "./urls";
 
-const handleRegisterAction = async ({ request }) => {
+export const handleRegisterAction = async ({ request }) => {
   const formData = await request.formData();
   const username = formData.get("username");
   const email = formData.get("email");
@@ -16,7 +16,6 @@ const handleRegisterAction = async ({ request }) => {
     );
 
     if (response.status === 201) {
-      console.log("Registration successful, redirecting to login.");
       return redirect("/login");
     }
     if (response.status === 409) {
@@ -30,4 +29,20 @@ const handleRegisterAction = async ({ request }) => {
   }
 };
 
-export default handleRegisterAction;
+export const handleLoginAction = async ({ request }) => {
+  const formData = await request.formData();
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  try {
+    const response = await sendData(baseLoginUrl, { email, password }, "POST");
+
+    if (response?.token) {
+      return redirect("/");
+    }
+    return { error: "Error during login. Please try again." };
+  } catch (error) {
+    console.error("Server error during login:", error);
+    return { error: "Server error" };
+  }
+};

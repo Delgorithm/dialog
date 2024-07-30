@@ -1,11 +1,6 @@
-import { useRef } from "react";
 import { Form } from "react-router-dom";
 
 function SignUp() {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   return (
     <Form method="POST" className="flex flex-col gap-2">
       <h2>Connexion</h2>
@@ -32,9 +27,7 @@ function SignUp() {
           required
         />
       </label>
-      <button type="submit" onClick={handleSubmit}>
-        Se connecter
-      </button>
+      <button type="submit">Se connecter</button>
     </Form>
   );
 }

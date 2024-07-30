@@ -12,18 +12,18 @@ const verifyUser = async (req, res, next) => {
         .json({ message: "Email and password are required" });
     }
 
-    const user = await tables.user.readByEmailWithPassword(req.body.email);
+    const user = await tables.users.readByEmailWithPassword(email);
 
-    if (user === null) {
-      res.sendStatus(422).json({ message: "Invalid email or password" });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const verified = await bcrypt.compare(password, user.password);
+    const verified = await bcrypt.compare(password, user.hashed_password);
 
     if (verified) {
       delete user.hashed_password;
 
-      const adminRole = user.is_Admin === 1 ? user.is_Admin : null;
+      const adminRole = user.is_Admin === 1 ? "admin" : "user";
 
       const token = jwt.sign(
         { sub: user.id, role: adminRole },
@@ -31,10 +31,9 @@ const verifyUser = async (req, res, next) => {
         { expiresIn: "1h" }
       );
 
-      res.json({ token });
-    } else {
-      res.sendStatus(422).json({ message: "Invalid email or password" });
+      return res.json({ token });
     }
+    return res.status(401).json({ message: "Invalid email or password" });
   } catch (err) {
     next(err);
   }
