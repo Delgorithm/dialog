@@ -8,24 +8,7 @@ function Register() {
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
 
-  const { errors, validate } = useForm();
-
-  const handleSubmit = () => {
-    const fields = {
-      username: usernameRef.current.value,
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-      confirmPassword: confirmPasswordRef.current.value,
-    };
-
-    console.info("Form fields:", fields);
-
-    if (validate(fields)) {
-      console.info("Form is valid");
-    } else {
-      console.info("Form has errors");
-    }
-  };
+  const { errors } = useForm();
 
   return (
     <Form method="POST" className="flex flex-col gap-2">
@@ -83,9 +66,7 @@ function Register() {
         {errors.password && <p>{errors.password}</p>}
       </label>
 
-      <button type="submit" onClick={handleSubmit}>
-        S'inscrire
-      </button>
+      <button type="submit">S'inscrire</button>
     </Form>
   );
 }

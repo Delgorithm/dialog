@@ -1,37 +1,33 @@
-/* eslint-disable no-else-return */
 import { redirect } from "react-router-dom";
 import { sendData } from "../services/api.service";
 import { baseRegisterUrl } from "./urls";
 
-export const handleRegisterAction = async ({ request }) => {
-  const formData = request.formData;
+const handleRegisterAction = async ({ request }) => {
+  const formData = await request.formData();
   const username = formData.get("username");
   const email = formData.get("email");
   const password = formData.get("password");
 
-  console.info("Form data received in action:", { username, email, password });
-
   try {
     const response = await sendData(
       baseRegisterUrl,
-      {
-        username,
-        email,
-        password,
-      },
+      { username, email, password },
       "POST"
     );
 
-    if (response && response.status === 201) {
+    if (response.status === 201) {
+      console.log("Registration successful, redirecting to login.");
       return redirect("/login");
-    } else if (response && response.status === 409) {
-      return { error: "Cet email est déjà utilisé." };
+    }
+    if (response.status === 409) {
+      return { error: "Email already in use" };
     }
 
-    console.error("Registration failed, response:", response);
+    return { error: "Error during registration. Please try again." };
   } catch (error) {
-    console.error("Erreur lors de l'inscription:", error);
+    console.error("Server error during registration:", error);
+    return { error: "Server error" };
   }
-
-  return null;
 };
+
+export default handleRegisterAction;

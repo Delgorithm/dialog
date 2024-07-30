@@ -5,7 +5,7 @@ import App from "./App";
 import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
 import Register from "./pages/Register";
-import { handleRegisterAction } from "./utils/actions";
+import handleRegisterAction from "./utils/actions";
 
 const router = createBrowserRouter([
   {
