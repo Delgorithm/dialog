@@ -1,56 +1,33 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
+import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import Results from "./pages/Results.jsx";
-import Profil from "./pages/Profil.jsx";
-import SignUp from "./pages/SignUp.jsx";
-import SignOut from "./pages/SignOut.jsx";
-import Register from "./pages/Register.jsx";
-import SelectedDay from "./components/SelectedDay.jsx";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import Landing from "./pages/Landing";
+import SignUp from "./pages/SignUp";
+import Register from "./pages/Register";
+import handleRegisterAction from "./utils/actions";
 
 const router = createBrowserRouter([
-	{
-		element: <App />,
-		children: [
-			{
-				path: "/",
-				element: <Home />,
-			},
-			{
-				path: "/calendar/:id",
-				element: <SelectedDay />,
-			},
-			{
-				path: "results",
-				element: <Results />,
-			},
-			{
-				path: "profil",
-				element: <Profil />,
-			},
-			{
-				path: "date/:date",
-				element: <Home />,
-			},
-			{
-				path: "signup",
-				element: <SignUp />,
-			},
-			{
-				path: "signout",
-				element: <SignOut />,
-			},
-			{
-				path: "register",
-				element: <Register />,
-			},
-		],
-	},
+  {
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Landing />,
+      },
+      {
+        path: "/login",
+        element: <SignUp />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+        action: handleRegisterAction,
+      },
+    ],
+  },
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById("root")).render(
-	<RouterProvider router={router} />
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
 );

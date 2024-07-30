@@ -1,5 +1,5 @@
 function Profil() {
-	return <p>Profil</p>;
+  return <p>Profil</p>;
 }
 
 export default Profil;
