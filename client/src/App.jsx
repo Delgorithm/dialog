@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 import "./App.css";
-import { CurrentUserContext } from "./contexts/CurrentUserProvider";
+import { AuthProvider } from "./contexts/AuthProvider";
 
 function App() {
   return (
-    <CurrentUserContext>
+    <AuthProvider>
       <section className="bg-[#f9f9f9] h-full">
         <Outlet />
       </section>
-    </CurrentUserContext>
+    </AuthProvider>
   );
 }
 
