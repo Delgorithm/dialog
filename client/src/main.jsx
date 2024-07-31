@@ -5,7 +5,10 @@ import App from "./App";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { handleRegisterAction, handleLoginAction } from "./utils/actions";
+import {
+  handleRegisterAction,
+  handleLoginAction,
+} from "./utils/actionsRegisterLogin";
 
 const router = createBrowserRouter([
   {

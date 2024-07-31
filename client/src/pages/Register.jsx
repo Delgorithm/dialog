@@ -11,7 +11,7 @@ function Register() {
   const { errors } = useForm();
 
   return (
-    <Form method="POST" className="flex flex-col gap-2">
+    <Form method="POST" action="/register" className="flex flex-col gap-2">
       <h2>Inscription</h2>
       <label htmlFor="username" className="">
         Nom d'utilisateur

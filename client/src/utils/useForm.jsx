@@ -3,7 +3,7 @@ import {
   validateEmail,
   validateUsername,
   validatePasswords,
-} from "./validation";
+} from "./validationRegister";
 
 const useForm = () => {
   const [errors, setErrors] = useState({});
