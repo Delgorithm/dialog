@@ -1,8 +1,15 @@
+import { baseUrl } from "../utils/urls";
+
 export async function fetchApi(url) {
   try {
     const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3310";
-    const response = await fetch(`${baseUrl}${url}`);
+    console.log(`Fetching data from: ${baseUrl}/api${url}`);
+    const response = await fetch(`${baseUrl}/api${url}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const jsonData = await response.json();
+    console.log("Data received:", jsonData);
     return jsonData;
   } catch (error) {
     console.error("Error during the fetch of data: ", error);
@@ -12,7 +19,7 @@ export async function fetchApi(url) {
 
 export async function sendData(url, data, method = "POST") {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}${url}`, {
+    const response = await fetch(`${baseUrl}/api${url}`, {
       method,
       headers: {
         "Content-Type": "application/json",

@@ -10,6 +10,8 @@ const userActions = require("../../../controllers/userActions");
 
 const { verifyUser } = require("../../../middlewares/verifyUser");
 
+// const { verifyToken } = require("../../../middlewares/verifyToken");
+
 router.post("/users", verifyHashPassword, userActions.add);
 
 router.post("/login", verifyUser);

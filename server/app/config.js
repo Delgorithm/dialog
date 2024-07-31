@@ -1,7 +1,6 @@
 // Load the express module to create a web application
 
 const express = require("express");
-
 const path = require("path");
 
 const app = express();
@@ -27,16 +26,12 @@ const app = express();
 // 4. Be sure to only have URLs in the array with domains from which you want to allow requests.
 // For example: ["http://mysite.com", "http://another-domain.com"]
 
-/*
- */
 const cors = require("cors");
 
 app.use(
   cors({
     origin: [
       process.env.CLIENT_URL, // keep this one, after checking the value in `server/.env`
-      "http://mysite.com",
-      "http://another-domain.com",
     ],
   })
 );
@@ -118,12 +113,15 @@ app.use(express.static(reactBuildPath));
 
 // Serve server resources
 
-app.get("*.*", express.static(publicFolderPath, { maxAge: "1y" }));
+app.use(
+  "/assets",
+  express.static(path.join(publicFolderPath, "assets"), { maxAge: "1y" })
+);
 
 // Redirect unhandled requests to the react index file
 
 app.get("*", (_, res) => {
-  res.sendFile(path.join(reactBuildPath, "/index.html"));
+  res.sendFile(path.join(reactBuildPath, "index.html"));
 });
 
 /* ************************************************************************* */

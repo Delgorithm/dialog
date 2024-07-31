@@ -38,6 +38,7 @@ export function AuthProvider({ children }) {
   const logoutUser = () => {
     logout();
     setUser(null);
+    navigate("/");
   };
 
   const contextValue = useMemo(

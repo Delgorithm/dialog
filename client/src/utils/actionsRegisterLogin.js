@@ -1,6 +1,7 @@
 import { redirect } from "react-router-dom";
 import { sendData } from "../services/api.service";
 import { baseRegisterUrl, baseLoginUrl } from "./urls";
+import { decodeJwtToken } from "./auth";
 
 export const handleRegisterAction = async ({ request }) => {
   const formData = await request.formData();
@@ -41,7 +42,14 @@ export const handleLoginAction = async ({ request }) => {
     if (response?.token) {
       localStorage.setItem("token", response.token);
 
-      localStorage.setItem("redirectUrl", "/");
+      const userData = decodeJwtToken(response.token);
+
+      if (userData?.id) {
+        localStorage.setItem(
+          "redirectUrl",
+          `/dashboard/profile/${userData.id}`
+        );
+      }
 
       window.location.reload();
     }

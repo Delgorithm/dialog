@@ -7,12 +7,12 @@ const router = express.Router();
 /* ************************************************************************* */
 
 const authRouter = require("./auth/router");
+const glucoseRouter = require("./glucose/router");
+const usersRouter = require("./users/router");
 
 router.use("/auth", authRouter);
-
-const glucoseRouter = require("./glucose/router");
-
 router.use("/glucose", glucoseRouter);
+router.use("/users", usersRouter);
 
 /* ************************************************************************* */
 

@@ -23,6 +23,15 @@ class UserRepository extends AbstractRepository {
     return result.insertId;
   }
 
+  async read(id) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
+
+    return rows[0];
+  }
+
   async update(user) {
     const [result] = await this.database.query(
       `UPDATE ${this.table} SET username = ?, city = ?, email = ? WHERE id = ?`,

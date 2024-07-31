@@ -9,6 +9,9 @@ import {
   handleRegisterAction,
   handleLoginAction,
 } from "./utils/actionsRegisterLogin";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import fetchUserProfile from "./utils/fetchUserProfile";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +30,17 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
         action: handleRegisterAction,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "profile/:id",
+            element: <Profile />,
+            loader: fetchUserProfile,
+          },
+        ],
       },
     ],
   },
