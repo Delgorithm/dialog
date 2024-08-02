@@ -16,10 +16,7 @@ export const HandleRegisterAction = async ({ request }) => {
       "POST"
     );
 
-    console.log("Response from server:", response);
-
     if (response.status === 201) {
-      console.log("Registration successful, redirecting to /login");
       return redirect("/login");
     }
 
@@ -42,10 +39,11 @@ export const HandleLoginAction = async ({ request }) => {
   try {
     const response = await sendData(baseLoginUrl, { email, password }, "POST");
 
-    if (response?.token) {
-      localStorage.setItem("token", response.token);
+    if (response?.data?.token) {
+      const token = response.data.token;
+      localStorage.setItem("token", token);
 
-      const userData = decodeJwtToken(response.token);
+      const userData = decodeJwtToken(token);
 
       if (userData?.id) {
         localStorage.setItem(
@@ -53,10 +51,8 @@ export const HandleLoginAction = async ({ request }) => {
           `/dashboard/profile/${userData.id}`
         );
       }
-
-      window.location.reload();
+      return redirect(`/dashboard/profile/${userData.id}`);
     }
-    return { error: "Error during login. Please try again." };
   } catch (error) {
     console.error("Server error during login:", error);
     return { error: "Server error" };

@@ -29,9 +29,9 @@ export async function sendData(url, data, method = "POST") {
     }
 
     const responseData = await response.json();
-    return responseData;
+    return { status: response.status, data: responseData };
   } catch (err) {
     console.error("Error during the send of data: ", err);
-    return null;
+    return { status: 500, error: err };
   }
 }
