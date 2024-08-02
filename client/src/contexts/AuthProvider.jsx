@@ -12,7 +12,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const { user: authUser, error: authError } = checkAuth();
-
     setUser(authUser);
     setError(authError);
 

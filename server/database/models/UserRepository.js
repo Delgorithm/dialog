@@ -10,7 +10,6 @@ class UserRepository extends AbstractRepository {
       `SELECT * FROM ${this.table} WHERE email = ?`,
       [email]
     );
-
     return rows[0];
   }
 
@@ -19,7 +18,6 @@ class UserRepository extends AbstractRepository {
       `INSERT INTO ${this.table} (email, hashed_password, username) VALUES (?, ?, ?)`,
       [user.email, user.hashed_password, user.username]
     );
-
     return result.insertId;
   }
 
@@ -28,7 +26,6 @@ class UserRepository extends AbstractRepository {
       `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
-
     return rows[0];
   }
 
@@ -37,7 +34,6 @@ class UserRepository extends AbstractRepository {
       `UPDATE ${this.table} SET username = ?, city = ?, email = ? WHERE id = ?`,
       [user.username, user.city, user.email, user.id]
     );
-
     return result.affectedRows;
   }
 
@@ -46,7 +42,6 @@ class UserRepository extends AbstractRepository {
       `DELETE FROM ${this.table} WHERE id = ?`,
       [userId]
     );
-
     return result.affectedRows;
   }
 }

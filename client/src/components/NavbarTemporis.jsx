@@ -12,10 +12,14 @@ function Navbar() {
         </li>
         {user ? (
           <>
-            <p>Welcome, {user.username}</p>
-            <button type="button" onClick={logout}>
-              Logout
-            </button>
+            <li>
+              <p>Welcome {user.username}</p>
+            </li>
+            <li>
+              <button type="button" onClick={logout}>
+                Logout
+              </button>
+            </li>
           </>
         ) : (
           <>

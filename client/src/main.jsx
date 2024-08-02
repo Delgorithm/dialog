@@ -6,8 +6,8 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import {
-  handleRegisterAction,
-  handleLoginAction,
+  HandleRegisterAction,
+  HandleLoginAction,
 } from "./utils/actionsRegisterLogin";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
@@ -24,12 +24,12 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
-        action: handleLoginAction,
+        action: HandleLoginAction,
       },
       {
         path: "/register",
         element: <Register />,
-        action: handleRegisterAction,
+        action: HandleRegisterAction,
       },
       {
         path: "/dashboard",

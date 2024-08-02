@@ -3,7 +3,7 @@ import { sendData } from "../services/api.service";
 import { baseRegisterUrl, baseLoginUrl } from "./urls";
 import { decodeJwtToken } from "./auth";
 
-export const handleRegisterAction = async ({ request }) => {
+export const HandleRegisterAction = async ({ request }) => {
   const formData = await request.formData();
   const username = formData.get("username");
   const email = formData.get("email");
@@ -16,7 +16,10 @@ export const handleRegisterAction = async ({ request }) => {
       "POST"
     );
 
+    console.log("Response from server:", response);
+
     if (response.status === 201) {
+      console.log("Registration successful, redirecting to /login");
       return redirect("/login");
     }
 
@@ -31,7 +34,7 @@ export const handleRegisterAction = async ({ request }) => {
   }
 };
 
-export const handleLoginAction = async ({ request }) => {
+export const HandleLoginAction = async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");

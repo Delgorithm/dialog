@@ -16,16 +16,16 @@ const read = async (req, res, next) => {
   try {
     console.log("Fetching user with ID:", req.params.id);
     const user = await tables.users.read(req.params.id);
-    console.log("User data from database:", user);
     if (user) {
-      res.json(user);
+      console.log("User found:", user);
+      res.json(user); // Renvoie l'utilisateur en JSON
     } else {
-      res.status(404).json({ message: "User not found" });
+      console.log("User not found");
+      res.status(404).send("User not found");
     }
   } catch (err) {
-    console.error("Error in read controller:", err);
-    res.status(500).json({ message: "Internal server error" });
-    next();
+    console.error("Error fetching user:", err);
+    next(err);
   }
 };
 

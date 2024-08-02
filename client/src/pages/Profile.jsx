@@ -1,11 +1,17 @@
+import { useEffect } from "react";
 import { useParams, useLoaderData } from "react-router-dom";
+import { useAuth } from "../contexts/AuthProvider";
 
 function Profile() {
   const { id } = useParams();
   const { userData } = useLoaderData();
+  const { setUser } = useAuth();
 
-  console.log("Profile page loaded for user ID:", id);
-  console.log("User data:", userData);
+  useEffect(() => {
+    if (userData) {
+      setUser(userData);
+    }
+  }, [userData, setUser]);
 
   if (!userData) {
     return <p>Chargement...</p>;
@@ -15,8 +21,8 @@ function Profile() {
     <>
       <h1>Profil</h1>
       <p>Username: {userData.username}</p>
-      <p>Email : {userData.email}</p>
-      <p>Id : {id}</p>
+      <p>Email: {userData.email}</p>
+      <p>Id: {id}</p>
     </>
   );
 }
