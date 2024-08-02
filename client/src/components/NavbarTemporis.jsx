@@ -16,6 +16,9 @@ function Navbar() {
               <p>Welcome {user.username}</p>
             </li>
             <li>
+              <Link to={`/dashboard/profile/${user.id}`}>Profil</Link>
+            </li>
+            <li>
               <button type="button" onClick={logout}>
                 Logout
               </button>

@@ -12,6 +12,7 @@ import {
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import fetchUserProfile from "./utils/fetchUserProfile";
+import AuthProtected from "./utils/AuthProtected";
 
 const router = createBrowserRouter([
   {
@@ -33,11 +34,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <AuthProtected>
+            <Dashboard />
+          </AuthProtected>
+        ),
         children: [
           {
             path: "profile/:id",
-            element: <Profile />,
+            element: (
+              <AuthProtected>
+                <Profile />
+              </AuthProtected>
+            ),
             loader: fetchUserProfile,
           },
         ],
