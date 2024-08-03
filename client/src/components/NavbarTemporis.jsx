@@ -13,6 +13,9 @@ function Navbar() {
         {user ? (
           <>
             <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li>
               <p>Welcome {user.username}</p>
             </li>
             <li>

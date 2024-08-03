@@ -34,11 +34,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: (
-          <AuthProtected>
-            <Dashboard />
-          </AuthProtected>
-        ),
+        element: <Dashboard />,
+        loader: fetchUserProfile,
         children: [
           {
             path: "profile/:id",
