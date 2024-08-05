@@ -13,6 +13,8 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import fetchUserProfile from "./utils/fetchUserProfile";
 import AuthProtected from "./utils/AuthProtected";
+import Calendar from "./pages/Calendar";
+import Charts from "./pages/Charts";
 
 const router = createBrowserRouter([
   {
@@ -39,12 +41,16 @@ const router = createBrowserRouter([
         children: [
           {
             path: "profile/:id",
-            element: (
-              <AuthProtected>
-                <Profile />
-              </AuthProtected>
-            ),
+            element: <Profile />,
             loader: fetchUserProfile,
+          },
+          {
+            path: "calendar",
+            element: <Calendar />,
+          },
+          {
+            path: "charts",
+            element: <Charts />,
           },
         ],
       },
